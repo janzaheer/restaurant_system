@@ -1,0 +1,249 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+	<style>
+		.item-row th {
+			background: #eee;
+		}
+
+		.delete-btn {
+			position: relative;
+		}
+
+		.delete {
+			display: block;
+			color: #000;
+			text-decoration: none;
+			position: absolute;
+			background: #EEEEEE;
+			font-weight: bold;
+			padding: 0px 3px;
+			border: 1px solid;
+			top: -6px;
+			left: -6px;
+			font-family: Verdana;
+			font-size: 12px;
+		}
+	</style>
+
+	<div class="col-lg-10 col-md-10 col-sm-10">
+		<br>
+        <a href="{% url 'dashboard' %}"><button type="button" class="btn btn-primary">Home</button></a>
+        <a href="{% url 'order_list' %}"><button type="button" class="btn btn-primary">Create New Order</button></a>
+        <br><br>
+		<div class="content-panel" style="padding: 5px">
+			<div class="row">
+				<div class="col-xs-12 col-md-12">
+					<div>
+						<h2 class="text-center">Order</h2>
+						<h5 class="text-center">Behisht Arabian Cuisine</h5>
+						<h6 class="text-center">Airport Road Quetta Near Buitems Takatu Campus</h6>
+					</div>
+				</div>
+				<div class="col-xs-12 col-md-12">
+					<hr>
+					<div class="row">
+						<div class="col-xs-6 col-md-6">
+							<div><strong>Billed To:</strong> <span style="float: right" >{{ timezone }}</span></div><br>
+                            <input type="text" class="form-control table_no" name="table_no" placeholder="Table No." list="table-list">
+                            <datalist id="table-list">
+                                {% for table in tables %}
+{#                                            <option data-id="{{ category.id }}" value="{{ category.id }}">{{ category.name }}</option>#}
+                                    <option value="{{ table.table_no }}"></option>
+                                {% endfor %}
+                            </datalist><br>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-md-12">
+					<div class="table-responsive">
+						<table class="table table-bordered">
+							<thead>
+							<tr class="item-row">
+								<th>Item</th>
+								<th>Price</th>
+								<th>Quantity</th>
+								<th>Total</th>
+							</tr>
+							</thead>
+							<tbody>
+							<tr id="hiderow">
+								<td colspan="4">
+									<a id="addRow" href="javascript:;" title="Add Item" class="btn btn-primary">Add Item</a> <span class="item-error" style="color: red; display: none">please add Item</span>
+								</td>
+							</tr>
+							<tr>
+								<td></td>
+								<td></td>
+								<td class="text-right"><strong>Sub Total</strong></td>
+								<td><span id="subtotal">0.00</span></td>
+							</tr>
+                            <tr>
+								<td><strong>Total Quantity: </strong><span id="totalQty" style="color: red; font-weight: bold">0</span> Units</td>
+								<td></td>
+								<td class="text-right"><strong>Service Charges (<span id="service_charges">7</span><span>%</span>)</strong></td>
+                                <td><span id="charges_amount">0</span></td>
+							</tr>
+{#							<tr>#}
+{#								<td><strong>Total Quantity: </strong><span id="totalQty" style="color: red; font-weight: bold">0</span> Units</td>#}
+{#								<td></td>#}
+{#								<td class="text-right"><strong>Discount</strong></td>#}
+{#								<td><input class="form-control" id="discount" value="0" type="text"></td>#}
+{#							</tr>#}
+{#							<tr>#}
+{#								<td></td>#}
+{#								<td></td>#}
+{#								<td class="text-right"><strong>Shipping</strong></td>#}
+{#								<td><input class="form-control" id="shipping" value="0" type="text"></td>#}
+{#							</tr>#}
+							<tr>
+								<td></td>
+								<td></td>
+								<td class="text-right"><strong>Grand Total</strong></td>
+								<td><span id="grandTotal" style="color:red">0</span></td>
+							</tr>
+{#                            <tr>#}
+{#								<td></td>#}
+{#								<td></td>#}
+{#								<td class="text-right"><strong>Received Amount</strong></td>#}
+{#								<td><input class="form-control" id="paidAmount" value="0" type="text"></td>#}
+{#							</tr>#}
+{#                            <tr>#}
+{#								<td></td>#}
+{#								<td></td>#}
+{#								<td class="text-right"><strong>Remaining Amount</strong></td>#}
+{#								<td><span id="remainingAmount">0</span></td>#}
+{#							</tr>#}
+							</tbody>
+						</table>
+					</div>
+					<a id="create-invoice" href="javascript:;" title="Create Invoice" class="btn btn-primary pull-right">Create Invoice</a>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}
+
+{% block scripts %}
+{{ block.super }}
+	<script src="{% static 'js/jquery.invoice.js' %}"></script>
+	<script>
+		jQuery(document).ready(function(){
+			jQuery().invoice({
+				addRow : "#addRow",
+				delete : ".delete",
+				parentClass : ".item-row",
+
+				price : ".price",
+				qty : ".qty",
+				total : ".total",
+				totalQty: "#totalQty",
+
+				subtotal : "#subtotal",
+				discount: "#discount",
+				shipping : "#shipping",
+				grandTotal : "#grandTotal",
+
+                remainingAmount: '#remainingAmount',
+                paidAmount: '#paidAmount'
+			});
+
+		});
+        $(function () {
+
+            $('.invoice-item').live('focusout', function(){
+                var item_price = $(this).parent().parent().find("option[value='" + $(this).val() + "']").data('price');
+                $(this).parent().parent().parent().find('.price').val(item_price);
+            });
+            $('#create-invoice').live('click', function () {
+
+                if ($('#item-name').hasClass('item-name') == false ) {
+                    $('.item-error').show();
+                    return;
+                }
+                var error = false;
+                if       ($('.invoice-item').val() == ""){
+                    $(".item-error").show();
+                    error=true;
+                    $('.invoice-item').css('border-color', 'red');
+                }
+                else {
+                    $('.invoice-item').css('border' ,'none');
+
+                }
+                if ($('.price').val()=="") {
+
+                    $('.item-error').show();
+                    $('.price').css('border-color', 'red');
+                    error=true;
+                }
+                else {
+                    $('.item-error').hide();
+                    $('.price').css('border', 'none');
+                }
+                if (error == true){
+                    return;
+                }
+                var items = [];
+                var total_quantity = 0;
+                for (var i=1; i<$('.item-row').length; i+=1) {
+                    var products = {};
+                    products['item_name'] = $('.item-row').eq(i).find('#invoice-item').val();
+                    products['price'] = $('.item-row').eq(i).find('.price').val();
+                    products['qty'] = $('.item-row').eq(i).find('.qty').val();
+                    products['perdiscount'] = $('.item-row').eq(i).find('.perdiscount').val();
+                    products['total'] = $('.item-row').eq(i).find('.total').text();
+                    if ($('.item-row').eq(i).find('#invoice-item').val() != "") {
+                        items.push(products);
+                        total_quantity += Number(products['qty']);
+                    }
+                }
+                var sub_total = $('#subtotal').text();
+                var discount = $('#discount').val();
+                var shipping = $('#shipping').val();
+                var grand_total = $('#grandTotal').text();
+                var remaining_amount = $('#remainingAmount').text();
+                var paid_amount = $('#paidAmount').val();
+                var totalQty = total_quantity;
+                var service_charges = $('#charges_amount').text();
+                var table_no = $('.table_no').val();
+
+
+                $.post("/order/generate/api/", {
+                        csrfmiddlewaretoken: '{{ csrf_token }}',
+                        table_no: table_no,
+                        sub_total: sub_total,
+                        grand_total: grand_total,
+                        totalQty: totalQty,
+                        service_charges: service_charges,
+                        items: JSON.stringify(items)
+                    }, function (result, status) {
+                        window.location.href = '/order/list/';
+                    }
+                )
+            });
+
+            $('.new-customer').on('click', function () {
+                $('.existing-customer').hide();
+                $('.new-customer-form').show();
+                $('.customer').val('');
+            });
+
+            $('.added-customer').on('click', function () {
+                $('.existing-customer').show();
+                $('.new-customer-form').hide();
+                $('.customer_name').val('');
+                $('.customer_phone').val('');
+            });
+
+        });
+        $('.btn-primary').on('click', function () {
+            $('.item-error').hide();
+        });
+
+	</script>
+
+{% endblock %}

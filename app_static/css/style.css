@@ -1,0 +1,28 @@
+.panel-primary>.panel-heading:hover{
+	background-color: #7cb5ec;
+	transition: 2s all;
+	border-color: #7cb5ec;
+}
+.panel-primary:hover{
+	border-color: #7cb5ec;
+	transition: 2s all;
+}
+.top-header{
+	display: inline-block;
+	width: 100%;
+	background-color: #323232;
+}
+.nav>li>a:hover{
+	    background-color: #7cb5ec !important;
+	    transition: 2s all;
+}
+.fa_fontawesm{
+	display: inline-block;
+	color: #fff !important;
+}
+.content-panel {
+    background: #ffffff;
+    box-shadow: 0px 3px 2px #aab2bd;
+    padding-top: 15px;
+    padding-bottom: 5px;
+}

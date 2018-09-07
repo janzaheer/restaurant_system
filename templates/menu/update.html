@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <style>
+    .errorlist {
+        padding: 0;
+        list-style-type: none;
+    }
+    </style>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <br>
+                <a href="{% url 'menu_list' %}"><button type="button" class="btn btn-primary" style="float: left">Menu List</button></a>
+                <br><br><br>
+                <div class="content-panel">
+                    <h3 class="text-center">Create New Category</h3>
+                    <div class="panel-body">
+                        <form class="form-horizontal add-customer-form" action="{% url 'menu_update' pk=object.id %}" method="post" >
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    {% csrf_token %}
+                                    {{ form.non_field_errors }}
+                                    <input type="text" class="form-control category" name="category" placeholder="Category" value="{{ object.category.name }}" list="category-list">
+                                    <datalist id="category-list">
+                                        {% for category in categories %}
+                                            <option value="{{ category.name }}"></option>
+                                        {% endfor %}
+                                    </datalist>
+                                    {% if form.errors.category %}<span style="color:red">{{ form.errors.category }}</span>{% endif %}
+                                    <br>
+                                    <input type="text" class="form-control name" name="name" placeholder="Item Name" value="{{ object.name }}">
+                                    {% if form.errors.name %}<span style="color:red">{{ form.errors.name }}</span>{% endif %}
+                                    <br>
+                                    <input type="text" class="form-control price" name="price" placeholder="Price" value="{{ object.price }}">
+                                    {% if form.errors.price %}<span style="color:red">{{ form.errors.price }}</span>{% endif %}
+                                    <br>
+                                    <button type="submit" class="btn btn-primary product-sub-btn" style="float: right">Save Item</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
