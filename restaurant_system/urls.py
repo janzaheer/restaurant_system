@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.conf.urls.static import static
 from django.conf import settings
 
-from common.views import DashboardView
+from common.views import DashboardView, ReportsView
 from restaurant_menu.views import (
     CategoryList, CategoryFormView, CategoryUpdateView, CategoryDeleteView,
     MenuListView, MenuFormView, MenuUpdateView, MenuDeleteView
@@ -27,6 +27,10 @@ from restaurant_sales.views import (
     TableListView, TableFormView, TableUpdateView, TableDeleteView,
     OrderListView, OrderCreateView, OrderUpdateView,
     ItemsDetailAPIView, GenerateOrderAPIView, UpdateOrderAPIView
+)
+from restaurant_stocks.views import (
+    StockListView, StockFormView, StockInFormView, StockOutFormView,
+    StockDetailView
 )
 
 
@@ -123,6 +127,38 @@ urlpatterns = [
         UpdateOrderAPIView.as_view(),
         name='order_update_api'
     ),
+
+    # Reports Url
+    url(
+        r'^reports/$', ReportsView.as_view(),
+        name='reports'
+    ),
+
+    # Stocks Url
+    url(
+        r'^stock/list/$', StockListView.as_view(),
+        name='stock_list'
+    ),
+    url(
+        r'^stock/new/$', StockFormView.as_view(),
+        name='stock_new'
+    ),
+    url(
+        r'^stock/(?P<pk>\d+)/in/$',
+        StockInFormView.as_view(),
+        name='stock_in'
+    ),
+    url(
+        r'^stock/(?P<pk>\d+)/out/$',
+        StockOutFormView.as_view(),
+        name='stock_out'
+    ),
+    url(
+        r'^stock/(?P<pk>\d+)/details/$',
+        StockDetailView.as_view(),
+        name='stock_details'
+    ),
+
 
 ]
 
