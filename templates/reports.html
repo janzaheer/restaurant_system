@@ -1,0 +1,415 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <div id="content-panel" class="content-panel col-lg-12">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header" style="margin: 10px 0 20px;"><strong>Reports</strong> <a href="{% url 'dashboard' %}"><i class="fa fa-home" style="float: right"></i></a></h1>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+            <div class="row">
+                <div class="col-lg-3 col-md-6">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-cutlery fa-5x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge">{{ todays_order }}</div>
+                                    <div>Today's Order No.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="panel panel-green">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-dollar fa-5x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge">{{ todays_amount }}</div>
+                                    <div>Todays Order Price Rs.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="panel panel-yellow">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-cutlery fa-5x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge">{{ total_order }}</div>
+                                    <div>Total Order No.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="panel panel-red">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-dollar fa-5x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge">{{ total_order_amount }}</div>
+                                    <div>Total Order Price Rs.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.row -->
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-bar-chart-o fa-fw"></i> Daily Sales Chart
+                        </div>
+                        <div class="panel-body">
+                            <div id="daily-sales" style="min-width: 310px; height: 500px; margin: 0 auto"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="panel panel-default" style="height: 571px">
+                        <div class="panel-heading">
+                            <i class="fa fa-bell fa-fw"></i> Daily Sales Reports
+                        </div>
+                        <div class="panel-body">
+                            <table class="table table-striped table-advance table-hover daily-sales-table">
+                                <thead>
+                                <tr>
+                                    <th><i class=""></i>Date</th>
+                                    <th><i class=""></i>Stock In (pkr)</th>
+                                    <th><i class=""></i>Stock Out (pkr)</th>
+                                    <th><i class=""></i>Orders (pkr)</th>
+                                </tr>
+                                </thead>
+                                <tbody class="daily-sales-tbody">
+                                    <tr>
+                                        <td>11-Sept</td>
+                                        <td>1150</td>
+                                        <td>1150</td>
+                                        <td>1150</td>
+                                    </tr>
+                                    <tr>
+                                        <td>11-Sept</td>
+                                        <td>1150</td>
+                                        <td>1150</td>
+                                        <td>1150</td>
+                                    </tr>
+                                    <tr>
+                                        <td>11-Sept</td>
+                                        <td>1150</td>
+                                        <td>1150</td>
+                                        <td>1150</td>
+                                    </tr>
+                                    <tr>
+                                        <td>11-Sept</td>
+                                        <td>1150</td>
+                                        <td>1150</td>
+                                        <td>1150</td>
+                                    </tr>
+                                    <tr>
+                                        <td>11-Sept</td>
+                                        <td>1150</td>
+                                        <td>1150</td>
+                                        <td>1150</td>
+                                    </tr>
+                                    <tr>
+                                        <td>11-Sept</td>
+                                        <td>1150</td>
+                                        <td>1150</td>
+                                        <td>1150</td>
+                                    </tr>
+                                    <tr>
+                                        <td>11-Sept</td>
+                                        <td>1150</td>
+                                        <td>1150</td>
+                                        <td>1150</td>
+                                    </tr>
+                                    <tr>
+                                        <td>11-Sept</td>
+                                        <td>1150</td>
+                                        <td>1150</td>
+                                        <td>1150</td>
+                                    </tr>
+                                    <tr>
+                                        <td>11-Sept</td>
+                                        <td>1150</td>
+                                        <td>1150</td>
+                                        <td>1150</td>
+                                    </tr>
+                                    <tr>
+                                        <td>11-Sept</td>
+                                        <td>1150</td>
+                                        <td>1150</td>
+                                        <td>1150</td>
+                                    </tr>
+                                    <tr>
+                                        <td>11-Sept</td>
+                                        <td>1150</td>
+                                        <td>1150</td>
+                                        <td>1150</td>
+                                    </tr>
+                                    <tr>
+                                        <td>11-Sept</td>
+                                        <td>1150</td>
+                                        <td>1150</td>
+                                        <td>1150</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+{#                            <a href="#" class="btn btn-default btn-block">View All Alerts</a>#}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-bar-chart-o fa-fw"></i> Monthly Sales Chart
+                        </div>
+                        <div class="panel-body">
+                            <div id="monthly-sales" style="min-width: 310px; height: 500px; margin: 0 auto"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="panel panel-default" style="height: 571px">
+                        <div class="panel-heading">
+                            <i class="fa fa-bell fa-fw"></i> Monthly Sales Reports
+                        </div>
+                        <div class="panel-body">
+                            <table class="table table-striped table-advance table-hover monthly-sales-table">
+                                <thead>
+                                <tr>
+                                    <th><i class=""></i>Date</th>
+                                    <th><i class=""></i>Stock In (pkr)</th>
+                                    <th><i class=""></i>Stock Out (pkr)</th>
+                                    <th><i class=""></i>Orders (pkr)</th>
+                                </tr>
+                                </thead>
+                                <tbody class="daily-sales-tbody">
+                                    <tr>
+                                        <td>11-Sept</td>
+                                        <td>1150</td>
+                                        <td>1150</td>
+                                        <td>1150</td>
+                                    </tr>
+                                    <tr>
+                                        <td>11-Sept</td>
+                                        <td>1150</td>
+                                        <td>1150</td>
+                                        <td>1150</td>
+                                    </tr>
+                                    <tr>
+                                        <td>11-Sept</td>
+                                        <td>1150</td>
+                                        <td>1150</td>
+                                        <td>1150</td>
+                                    </tr>
+                                    <tr>
+                                        <td>11-Sept</td>
+                                        <td>1150</td>
+                                        <td>1150</td>
+                                        <td>1150</td>
+                                    </tr>
+                                    <tr>
+                                        <td>11-Sept</td>
+                                        <td>1150</td>
+                                        <td>1150</td>
+                                        <td>1150</td>
+                                    </tr>
+                                    <tr>
+                                        <td>11-Sept</td>
+                                        <td>1150</td>
+                                        <td>1150</td>
+                                        <td>1150</td>
+                                    </tr>
+                                    <tr>
+                                        <td>11-Sept</td>
+                                        <td>1150</td>
+                                        <td>1150</td>
+                                        <td>1150</td>
+                                    </tr>
+                                    <tr>
+                                        <td>11-Sept</td>
+                                        <td>1150</td>
+                                        <td>1150</td>
+                                        <td>1150</td>
+                                    </tr>
+                                    <tr>
+                                        <td>11-Sept</td>
+                                        <td>1150</td>
+                                        <td>1150</td>
+                                        <td>1150</td>
+                                    </tr>
+                                    <tr>
+                                        <td>11-Sept</td>
+                                        <td>1150</td>
+                                        <td>1150</td>
+                                        <td>1150</td>
+                                    </tr>
+                                    <tr>
+                                        <td>11-Sept</td>
+                                        <td>1150</td>
+                                        <td>1150</td>
+                                        <td>1150</td>
+                                    </tr>
+                                    <tr>
+                                        <td>11-Sept</td>
+                                        <td>1150</td>
+                                        <td>1150</td>
+                                        <td>1150</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+{#                            <a href="#" class="btn btn-default btn-block">View All Alerts</a>#}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <script>
+            Highcharts.chart('daily-sales', {
+                chart: {
+                    type: 'area'
+                },
+                title: {
+                    text: 'Historic and Estimated Worldwide Population Growth by Region'
+                },
+                subtitle: {
+                    text: 'Source: Wikipedia.org'
+                },
+                xAxis: {
+                    categories: ['1750', '1800', '1850', '1900', '1950', '1999', '2050'],
+                    tickmarkPlacement: 'on',
+                    title: {
+                        enabled: false
+                    }
+                },
+                yAxis: {
+                    title: {
+                        text: 'Billions'
+                    },
+                    labels: {
+                        formatter: function () {
+                            return this.value / 1000;
+                        }
+                    }
+                },
+                tooltip: {
+                    split: true,
+                    valueSuffix: ' millions'
+                },
+                plotOptions: {
+                    area: {
+                        stacking: 'normal',
+                        lineColor: '#666666',
+                        lineWidth: 1,
+                        marker: {
+                            lineWidth: 1,
+                            lineColor: '#666666'
+                        }
+                    }
+                },
+                series: [{
+                    name: 'Asia',
+                    data: [502, 635, 809, 947, 1402, 3634, 5268]
+                }, {
+                    name: 'Africa',
+                    data: [106, 107, 111, 133, 221, 767, 1766]
+                }, {
+                    name: 'Europe',
+                    data: [163, 203, 276, 408, 547, 729, 628]
+                }, {
+                    name: 'America',
+                    data: [18, 31, 54, 156, 339, 818, 1201]
+                }, {
+                    name: 'Oceania',
+                    data: [2, 2, 2, 6, 13, 30, 46]
+                }]
+            });
+        </script>
+
+        <script>
+            Highcharts.chart('monthly-sales', {
+                chart: {
+                    type: 'area'
+                },
+                title: {
+                    text: 'Historic and Estimated Worldwide Population Growth by Region'
+                },
+                subtitle: {
+                    text: 'Source: Wikipedia.org'
+                },
+                xAxis: {
+                    categories: ['1750', '1800', '1850', '1900', '1950', '1999', '2050'],
+                    tickmarkPlacement: 'on',
+                    title: {
+                        enabled: false
+                    }
+                },
+                yAxis: {
+                    title: {
+                        text: 'Billions'
+                    },
+                    labels: {
+                        formatter: function () {
+                            return this.value / 1000;
+                        }
+                    }
+                },
+                tooltip: {
+                    split: true,
+                    valueSuffix: ' millions'
+                },
+                plotOptions: {
+                    area: {
+                        stacking: 'normal',
+                        lineColor: '#666666',
+                        lineWidth: 1,
+                        marker: {
+                            lineWidth: 1,
+                            lineColor: '#666666'
+                        }
+                    }
+                },
+                series: [{
+                    name: 'Asia',
+                    data: [502, 635, 809, 947, 1402, 3634, 5268]
+                }, {
+                    name: 'Africa',
+                    data: [106, 107, 111, 133, 221, 767, 1766]
+                }, {
+                    name: 'Europe',
+                    data: [163, 203, 276, 408, 547, 729, 628]
+                }, {
+                    name: 'America',
+                    data: [18, 31, 54, 156, 339, 818, 1201]
+                }, {
+                    name: 'Oceania',
+                    data: [2, 2, 2, 6, 13, 30, 46]
+                }]
+            });
+        </script>
+{% endblock %}
