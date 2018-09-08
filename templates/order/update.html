@@ -37,14 +37,14 @@
 					<div>
 						<h2 class="text-center">Order</h2>
 						<h5 class="text-center">Behisht Arabian Cuisine</h5>
-						<h6 class="text-center">Airport Road Quetta Near Buitems Takatu Campus</h6>
+						<h6 class="text-center">Main Airport Road Near Buitems Quetta</h6>
 					</div>
 				</div>
 				<div class="col-xs-12 col-md-12">
 					<hr>
 					<div class="row">
 						<div class="col-xs-6 col-md-6">
-							<div><strong>Billed To:</strong> <span style="float: right" >{{ order.created_at }}</span></div><br>
+							<div><strong>Dining In:</strong> <span style="float: right" >{{ order.created_at }}</span></div><br>
                             <input type="text" class="form-control table_no" name="table_no" placeholder="Table No." list="table-list" value="{{ order.table.table_no }}">
                             <datalist id="table-list">
                                 {% for table in tables %}
@@ -114,7 +114,7 @@
 							</tbody>
 						</table>
 					</div>
-					<a id="create-invoice" href="javascript:;" title="Create Invoice" class="btn btn-primary pull-right">Create Invoice</a>
+					<a id="create-invoice" href="javascript:;" title="Create Invoice" class="btn btn-primary pull-right" id="load" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i>Processing Order">Update Order</a>
 				</div>
 			</div>
 		</div>
@@ -235,5 +235,15 @@
         });
 
 	</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script>
+$('.btn').on('click', function() {
+    var $this = $(this);
+  $this.button('loading');
+    setTimeout(function() {
+       $this.button('reset');
+   }, 5000);
+});
+    </script>
 
 {% endblock %}
