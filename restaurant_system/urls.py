@@ -21,11 +21,12 @@ from django.conf import settings
 from common.views import DashboardView, ReportsView
 from restaurant_menu.views import (
     CategoryList, CategoryFormView, CategoryUpdateView, CategoryDeleteView,
-    MenuListView, MenuFormView, MenuUpdateView, MenuDeleteView
+    MenuListView, MenuFormView, MenuUpdateView, MenuDeleteView,
+    MenuItemPurchasedLogsView
 )
 from restaurant_sales.views import (
     TableListView, TableFormView, TableUpdateView, TableDeleteView,
-    OrderListView, OrderCreateView, OrderUpdateView,
+    OrderListView, OrderCreateView, OrderUpdateView, OrderView,
     ItemsDetailAPIView, GenerateOrderAPIView, UpdateOrderAPIView
 )
 from restaurant_stocks.views import (
@@ -112,6 +113,11 @@ urlpatterns = [
         OrderUpdateView.as_view(),
         name='order_update'
     ),
+    url(
+        r'^order/(?P<pk>\d+)/view/$',
+        OrderView.as_view(),
+        name='order_view'
+    ),
 
     # API Urls
     url(
@@ -132,6 +138,16 @@ urlpatterns = [
     url(
         r'^reports/$', ReportsView.as_view(),
         name='reports'
+    ),
+
+    # Logs Url
+    url(
+        r'^logs/$', MenuItemPurchasedLogsView.as_view(),
+        name='logs'
+    ),
+    url(
+        r'^logs/(?P<date>[a-zA-Z0-9_-]+)/$', MenuItemPurchasedLogsView.as_view(),
+        name='logs_date'
     ),
 
     # Stocks Url
@@ -158,8 +174,6 @@ urlpatterns = [
         StockDetailView.as_view(),
         name='stock_details'
     ),
-
-
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

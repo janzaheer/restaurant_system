@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 from django.shortcuts import render
-from django.contrib import messages
+from django.db.models import Sum
 from django.views.generic import (
-    FormView, TemplateView, RedirectView, UpdateView, DeleteView
+    FormView, TemplateView, ListView, UpdateView, DeleteView
 )
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, Http404
 
-from restaurant_menu.models import Menu, Category
+from restaurant_menu.models import Menu, Category, PurchaseMenuItem
 from restaurant_menu.forms import CategoryForm, MenuForm
 
 from django.core.urlresolvers import reverse, reverse_lazy
@@ -126,3 +126,45 @@ class CategoryDeleteView(DeleteView):
 
     def get(self, request, *args, **kwargs):
         return self.post(request, *args, **kwargs)
+
+
+class MenuItemPurchasedLogsView(TemplateView):
+    template_name = 'purchased_items_logs.html'
+    # model = PurchaseMenuItem
+    # paginate_by = 10
+    # is_paginated = True
+
+    def get_context_data(self, **kwargs):
+        context = super(
+            MenuItemPurchasedLogsView, self).get_context_data(**kwargs)
+
+        logs_date = self.kwargs.get('date')
+        if logs_date:
+            try:
+                logs_date = logs_date.split('-')
+                year = logs_date[0]
+                month = logs_date[1]
+                day = logs_date[2]
+                items = PurchaseMenuItem.objects.filter(
+                    created_at__year=year, created_at__month=month,
+                    created_at__day=day).order_by('created_at')
+
+                context.update({
+                    'logs_date': self.kwargs.get('date')
+                })
+            except (TypeError, IndexError):
+                items = PurchaseMenuItem.objects.all().order_by('created_at')
+        else:
+            items = PurchaseMenuItem.objects.all().order_by('created_at')
+
+        if items.exists():
+            total = items.aggregate(Sum('total_price'))
+            total = total.get('total_price__sum') or 0
+        else:
+            total = 0
+
+        context.update({
+            'items': items,
+            'total': total
+        })
+        return context
