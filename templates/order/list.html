@@ -44,6 +44,7 @@
                             <td>{{ order.total_due|floatformat:'-2' }}</td>
                             <td>{{ order.created_at }}</td>
                             <td>
+                                <a href="{% url 'order_view' pk=order.id %}"><button class="btn btn-success btn-xs"><i class="fa fa-eye"></i></button></a>
 {#                                <a href="#"><button class="btn btn-primary btn-xs"><i class="fa fa-plus"></i></button></a>#}
 {#                                <a href="#"><button class="btn btn-success btn-xs"><i class="fa fa-eye"></i></button></a>#}
                                 <a href="{% url 'order_update' pk=order.id %}"><button class="btn btn-primary btn-xs"><i class="fa fa-edit"></i></button></a>
