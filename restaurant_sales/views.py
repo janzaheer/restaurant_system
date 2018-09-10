@@ -95,6 +95,17 @@ class OrderUpdateView(TemplateView):
         return context
 
 
+class OrderView(TemplateView):
+    template_name = 'order/view.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(OrderView, self).get_context_data(**kwargs)
+        context.update({
+            'order': Order.objects.get(id=self.kwargs.get('pk'))
+        })
+        return context
+
+
 class ItemsDetailAPIView(View):
     def dispatch(self, request, *args, **kwargs):
         return super(

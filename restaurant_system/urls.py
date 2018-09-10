@@ -26,7 +26,7 @@ from restaurant_menu.views import (
 )
 from restaurant_sales.views import (
     TableListView, TableFormView, TableUpdateView, TableDeleteView,
-    OrderListView, OrderCreateView, OrderUpdateView,
+    OrderListView, OrderCreateView, OrderUpdateView, OrderView,
     ItemsDetailAPIView, GenerateOrderAPIView, UpdateOrderAPIView
 )
 from restaurant_stocks.views import (
@@ -113,6 +113,11 @@ urlpatterns = [
         OrderUpdateView.as_view(),
         name='order_update'
     ),
+    url(
+        r'^order/(?P<pk>\d+)/view/$',
+        OrderView.as_view(),
+        name='order_view'
+    ),
 
     # API Urls
     url(
@@ -169,8 +174,6 @@ urlpatterns = [
         StockDetailView.as_view(),
         name='stock_details'
     ),
-
-
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    Order Print View
+    <br><br>
+    {{ order }}
+    <br><br>
+    {{ order.id }}
+    <br><br>
+    {{ order.table.table_no }}
+    <br><br>
+    {{ order.items.all }}
+    <br><br>
+    {% for item in order.items.all %}
+        {{ forloop.counter }} -- {{ item.menu.name }} -- {{ item.price }} -- {{ item.quantity }} -- {{ item.total_price }} <br>
+    {% endfor %}
+    <br><br>
+    {{ order.sub_total }}
+    <br><br>
+    {{ order.service_charges }}
+    <br><br>
+    {{ order.total_due }}
+{% endblock %}
