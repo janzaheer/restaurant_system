@@ -34,6 +34,11 @@ from restaurant_stocks.views import (
     StockDetailView
 )
 
+from common.reports_api import (
+    DailyOrdersAPIView, MonthlyOrderAPIView,
+    DailyStocksAPIView, MonthlyStocksAPIView,
+)
+
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -138,6 +143,24 @@ urlpatterns = [
     url(
         r'^reports/$', ReportsView.as_view(),
         name='reports'
+    ),
+
+    # Reports API Endpoints
+    url(
+        r'^orders/daily/api/$', DailyOrdersAPIView.as_view(),
+        name='daily_orders'
+    ),
+    url(
+        r'^orders/monthly/api/$', MonthlyOrderAPIView.as_view(),
+        name='monthly_orders'
+    ),
+    url(
+        r'^stocks/daily/api/$', DailyStocksAPIView.as_view(),
+        name='daily_stocks'
+    ),
+    url(
+        r'^stocks/monthly/api/$', MonthlyStocksAPIView.as_view(),
+        name='monthly_stocks'
     ),
 
     # Logs Url
