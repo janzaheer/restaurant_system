@@ -35,3 +35,17 @@ class PurchaseMenuItem(DatedModel):
 
     def __unicode__(self):
         return self.menu.name
+
+    def get_order_no(self):
+        try:
+            p_order = self.purchase_orders.get()
+            return p_order.order_no
+        except:
+            return 0
+
+    def get_bill_no(self):
+        try:
+            p_order = self.purchase_orders.get()
+            return p_order.id
+        except:
+            return 0

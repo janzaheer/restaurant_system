@@ -21,7 +21,8 @@ from django.conf import settings
 from common.views import DashboardView, ReportsView
 from restaurant_menu.views import (
     CategoryList, CategoryFormView, CategoryUpdateView, CategoryDeleteView,
-    MenuListView, MenuFormView, MenuUpdateView, MenuDeleteView
+    MenuListView, MenuFormView, MenuUpdateView, MenuDeleteView,
+    MenuItemPurchasedLogsView
 )
 from restaurant_sales.views import (
     TableListView, TableFormView, TableUpdateView, TableDeleteView,
@@ -132,6 +133,16 @@ urlpatterns = [
     url(
         r'^reports/$', ReportsView.as_view(),
         name='reports'
+    ),
+
+    # Logs Url
+    url(
+        r'^logs/$', MenuItemPurchasedLogsView.as_view(),
+        name='logs'
+    ),
+    url(
+        r'^logs/(?P<date>[a-zA-Z0-9_-]+)/$', MenuItemPurchasedLogsView.as_view(),
+        name='logs_date'
     ),
 
     # Stocks Url
