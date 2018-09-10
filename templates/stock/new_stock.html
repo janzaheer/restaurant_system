@@ -33,7 +33,7 @@
                                         <option value="Quantity"></option>
                                     </datalist>
                                     <br>
-                                    <button type="submit" class="btn btn-primary product-sub-btn" style="float: right">Save Category</button>
+                                    <button type="submit" class="btn btn-primary product-sub-btn" style="float: right" id="load" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i>Saving">Save Category</button>
                                 </div>
                             </div>
                         </form>
@@ -42,4 +42,19 @@
             </div>
         </div>
     </div>
+{% endblock %}
+{% block scripts %}
+{{ block.super }}
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script>
+$('.btn').on('click', function() {
+    var $this = $(this);
+  $this.button('loading');
+    setTimeout(function() {
+       $this.button('reset');
+   }, 5000);
+});
+    </script>
+
 {% endblock %}

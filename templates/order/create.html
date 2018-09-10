@@ -25,8 +25,8 @@
 			font-size: 12px;
 		}
 	</style>
-
-	<div class="col-lg-10 col-md-10 col-sm-10">
+	<div class="container">
+	<div class="col-lg-12 col-md-12 col-sm-10">
 		<br>
         <a href="{% url 'dashboard' %}"><button type="button" class="btn btn-primary">Home</button></a>
         <a href="{% url 'order_list' %}"><button type="button" class="btn btn-primary">Create New Order</button></a>
@@ -45,8 +45,8 @@
 					<div class="row">
 						<div class="col-xs-6 col-md-6">
 							<div><strong>Dining In:</strong> <span style="float: right" >{{ timezone }}</span></div><br>
-                            <input type="text" class="form-control table_no" name="table_no" placeholder="Table No." list="table-list">
-                            <datalist id="table-list">
+                            <input type="text" class="form-control table_no" name="table_no" placeholder="Table No." list="table-list" required="required">
+                            <datalist id="table-list" >
                                 {% for table in tables %}
 {#                                            <option data-id="{{ category.id }}" value="{{ category.id }}">{{ category.name }}</option>#}
                                     <option value="{{ table.table_no }}"></option>
@@ -120,12 +120,13 @@
 							</tbody>
 						</table>
 					</div>
-					<a id="create-invoice" href="javascript:;" title="Create Invoice" class="btn btn-primary pull-right" id="load" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i>Processing Order">Create Order</a>
+					<a id="create-invoice" href="javascript:;" class="btn btn-primary pull-right" id="load" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i>Processing Order">Create Order</a>
 
 				</div>
 			</div>
 		</div>
 	</div>
+</div>
 {% endblock %}
 
 {% block scripts %}
@@ -244,7 +245,6 @@
         $('.btn-primary').on('click', function () {
             $('.item-error').hide();
         });
-
 	</script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.2.0/js/bootstrap.min.js"></script>
 <script>
