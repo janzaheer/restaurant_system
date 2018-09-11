@@ -27,7 +27,8 @@ class DailyOrdersAPIView(View):
 
         return {
             'total_price': total,
-            'date': date.strftime('%m/%d/%Y')
+            'date': date.strftime('%m/%d/%Y'),
+            'total_orders': obj_set.count()
         }
 
     def get(self, request, *args, **kwargs):
@@ -79,7 +80,8 @@ class MonthlyOrderAPIView(View):
 
         return {
             'total_price': total,
-            'date': date.strftime('%b %Y')
+            'date': date.strftime('%b %Y'),
+            'total_orders': obj_set.count()
         }
 
     def get(self, request, *args, **kwargs):

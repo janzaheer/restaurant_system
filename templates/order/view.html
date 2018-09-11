@@ -2,7 +2,7 @@
 
 {% block content %}
 
-    Order Print View
+   <!--  Order Print View
     <br><br>
     {{ order }}
     <br><br>
@@ -20,5 +20,321 @@
     <br><br>
     {{ order.service_charges }}
     <br><br>
-    {{ order.total_due }}
+    {{ order.total_due }} -->
+
+
+
+    <body>
+
+
+        <!-- Navigation -->
+        
+            <!-- /.navbar-top-links -->
+<section id="main-content">
+          <section class="wrapper">
+              
+    <style>
+        .item-row th {
+            background:#ddd ;
+            border: none;
+            
+        }
+        .table thead tr th{
+            border-bottom: 2px dotted #000 !important;
+        }
+        .table tbody{
+            border-bottom: 2px dotted #000 ;
+             
+        }
+        .table tbody tr td{
+            font-size: 11px;
+        }
+    </style>
+
+    <div class="col-lg-12 col-md-12 col-xs-12">
+        <br>
+        <a href="{% url 'dashboard' %}" class="btn btn-primary" style="float: left;margin-right: 5px">Home</a>
+        <a href="{% url 'order_list' %}" class="btn btn-primary" style="float: left;margin-right: 5px">Orders</a>
+        <a href="{% url 'order_update' pk=order.id %}" class="btn btn-primary" style="float: left;margin-right: 5px">Update</a>
+        <button type="button" class="btn btn-primary print-invoice-btn" onclick="PrintInvoice('print-invoice')" >Print Order</button>
+        <br><br><br>
+        <div class="content-panel print-invoice" id="print-invoice" style="padding: 5px">
+            <div class="row">
+                <div class="col-xs-12 col-md-12 col-lg-12">
+                    <div class="text-center">
+                        <h2><strong style="border-bottom: 1px solid #000; font-size:22px">Behisht Arabian Cuisine</strong></h2>
+                        
+                        <h4 style="font-size: 14px">Main Airport Road Near Buitems<br>Quetta</h4>
+                        <br>
+                        <h4 ><strong style="border: 1px solid #000; padding: 4px 15px;">Customer Bill</strong></h4>
+                        <h4><strong style="border-bottom: 1px solid #000">Dine In</strong></h4>
+                        <div class="row">
+                            <div class="col-lg-6 col-xs-6 "><strong>Date:</strong> {{ order.created_at|date }}</div>
+                            <div class="col-lg-6 col-xs-6 "><strong>Time:</strong> {{ order.created_at|time }}</div>                    
+                            <div class="col-lg-6 col-xs-6 "><strong style="font-size: 15px">Bill #</strong> {{ order.id }}</div>
+                            <div class="col-lg-6 col-xs-6 "><strong>Table #</strong> {{ order.table.table_no }}</div>
+                        </div>
+                    </div>
+                <div class="row">
+                    <div class="col-lg-12 col-md-12">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead style="border-bottom: 2px dotted #000">
+                                    <tr class="item-row">
+                                        <th>#</th>
+                                        <th>Item </th>
+                                        <th>Qty</th>
+                                        <th>Rate</th>
+                                        <th>Amount</th>
+                                    </tr>
+                                </thead>
+                                <tbody style="border-top: 2px dotted #000; border-bottom: 2px dotted #000">
+                                   
+                                {% for item in order.items.all %}
+                                    <tr >
+                                      <td>{{ forloop.counter }} </td>
+                                      <td>{{ item.menu.name }}</td>
+                                      <td>{{ item.quantity }}</td>
+                                      <td>{{ item.price }}</td>
+                                      <td>{{ item.total_price }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                            
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+                <div class="row">
+                    <div class="col-lg-9 col-md-8 col-xs-8 text-right">Sub Total:</div>
+                    <div class="col-lg-3 col-md-8 col-xs-4 text-left"><strong>{{ order.sub_total }}</strong></div>
+                    <br><br>
+                    <div class="col-lg-9 col-xs-8 text-right">Service Charges 7%:</div>
+                    <div class="col-lg-3 col-md-8 col-xs-4 text-left"><strong>{{ order.service_charges }}</strong></div>
+                    <br><br>
+                    <div class="col-lg-9 col-xs-8 text-right">Grand Total:</div>
+                    <div class="col-lg-3 col-md-8 col-xs-4 text-left"><strong>{{ order.total_due }}</strong></div>
+                    <hr>
+                    <div class="col-lg-12 text-center"><strong style="font-size: 20px">Thank You</strong></div>
+                    <div class="col-lg-12 text-center"><h6 style="font-size: 12px">Software Developed By Partum Solutions</h6></div>
+                     <div class="col-lg-6 col-xs-6 text-center"><h6 style="font-size: 12px">www.partumsolutions.com</h6></div>
+                      <div class="col-lg-6 col-xs-6 text-center"><h6 style="font-size: 12px">ph:+92-332-8364441</h6></div>
+                </div>
+         </div>
+         </div> 
+  
+     <script>
+        function PrintInvoice(divName){
+             var printContents = document.getElementById(divName).innerHTML;
+             var originalContents = document.body.innerHTML;
+             document.body.innerHTML = printContents;
+             window.print();
+             document.body.innerHTML = originalContents;
+        }
+    </script>
+
+  </section>  
+  </section>
+</div>
+
+<!-- jQuery -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+
+    <!-- Metis Menu Plugin JavaScript -->
+    <script src="vendor/metisMenu/metisMenu.min.js"></script>
+    <!-- Custom Theme JavaScript -->
+    <script src="dist/js/sb-admin-2.js"></script>
+
+    <!--javascript for invoice-->
+
+    <script src="jquery.invoice.js"></script>
+    <script>
+
+        jQuery(document).ready(function(){
+            jQuery().invoice({
+                addRow : "#addRow",
+                delete : ".delete",
+                parentClass : ".item-row",
+
+                price : ".price",
+                qty : ".qty",
+                total : ".total",
+                totalQty: "#totalQty",
+
+                subtotal : "#subtotal",
+                discount: "#discount",
+                shipping : "#shipping",
+                grandTotal : "#grandTotal",
+
+                remainingAmount: '#remainingAmount',
+                paidAmount: '#paidAmount'
+            });
+
+        });
+        $(function () {
+
+            $('.invoice-item').live('focusout', function(){
+                var item_price = $(this).parent().parent().find("option[value='" + $(this).val() + "']").data('price');
+                $(this).parent().parent().parent().find('.price').val(item_price);
+            });
+            $('#create-invoice').live('click', function () {
+
+                if ($('#item-name').hasClass('item-name') == false ) {
+                    $('.item-error').show();
+                    return;
+                }
+                var error = false;
+                if ($('.customer').is(":visible") == true)
+                {
+                    if ($('.customer').val() =="")
+                    {
+                        $('.customer').css('border-color', 'red');
+                        error = true;
+                    } else {
+                        $('.customer').css('border', 'none');
+                    }
+                    var existing_customers_id = [];
+                    
+                        existing_customers_id.push(1);
+                    
+                        existing_customers_id.push(2);
+                    
+                        existing_customers_id.push(4);
+                    
+
+                    var cus_val = $('.customer').val();
+                    var cus_id = $('#customer-list [value="' + cus_val + '"]').data('id');
+                    if(jQuery.inArray( cus_id, existing_customers_id ) == -1) {
+                        $('.customer-error').show();
+                        $('.customer').css('border-color', 'red');
+                        return;
+                    } else {
+                        $('.customer-error').hide();
+                    }
+                }
+                if ($('.customer_name').is(":visible") == true) {
+                    if ($('.customer_name').val() == "") {
+                        $('.customer_name').css('border-color', 'red');
+                        error = true;
+                    }
+                    else {
+                        $('.customer_name').css('border', 'none');
+                    }
+                    if ($('.customer_phone').val() == "") {
+                        $('.customer_phone').css('border-color', 'red');
+                    }
+                    else {
+                        $('.customer_phone').css('border', 'none');
+                    }
+                    
+                        if ($('.customer_name').val() == 'hasnan' && $('.customer_phone').val()== '03337876194') {
+                            $('.already-error').show();
+                            return;
+                        }
+                    
+                        if ($('.customer_name').val() == 'Zaheer Jan' && $('.customer_phone').val()== '03458365551') {
+                            $('.already-error').show();
+                            return;
+                        }
+                    
+                        if ($('.customer_name').val() == 'hasnan' && $('.customer_phone').val()== '0311145822') {
+                            $('.already-error').show();
+                            return;
+                        }
+                    
+                }
+                if       ($('.invoice-item').val() == ""){
+                    $(".item-error").show();
+                    error=true;
+                    $('.invoice-item').css('border-color', 'red');
+                }
+                else {
+                    $('.invoice-item').css('border' ,'none');
+
+                }
+                if ($('.price').val()=="") {
+
+                    $('.item-error').show();
+                    $('.price').css('border-color', 'red');
+                    error=true;
+                }
+                else {
+                    $('.item-error').hide();
+                    $('.price').css('border', 'none');
+                }
+                if (error == true){
+                    return;
+                }
+                var customer_name = $('.customer_name').val();
+                var customer_phone = $('.customer_phone').val();
+                var items = [];
+                var total_quantity = 0;
+                for (var i=1; i<$('.item-row').length; i+=1) {
+                    var products = {};
+                    products['item_name'] = $('.item-row').eq(i).find('#invoice-item').val();
+                    products['price'] = $('.item-row').eq(i).find('.price').val();
+                    products['qty'] = $('.item-row').eq(i).find('.qty').val();
+                    products['perdiscount'] = $('.item-row').eq(i).find('.perdiscount').val();
+                    products['total'] = $('.item-row').eq(i).find('.total').text();
+                    if ($('.item-row').eq(i).find('#invoice-item').val() != "") {
+                        items.push(products);
+                        total_quantity += Number(products['qty']);
+                    }
+                }
+                var sub_total = $('#subtotal').text();
+                var discount = $('#discount').val();
+                var shipping = $('#shipping').val();
+                var grand_total = $('#grandTotal').text();
+                var remaining_amount = $('#remainingAmount').text();
+                var paid_amount = $('#paidAmount').val();
+                var totalQty = total_quantity;
+
+                var customer_value = $('.customer').val();
+                var customer_id = $('#customer-list [value="' + customer_value + '"]').data('id');
+
+                $.post("/sales/api/generate/invoice/", {
+                        customer_id: customer_id,
+                        customer_name: customer_name,
+                        customer_phone: customer_phone,
+                        sub_total: sub_total,
+                        discount: discount,
+                        shipping: shipping,
+                        grand_total: grand_total,
+                        totalQty: totalQty,
+                        remaining_amount: remaining_amount,
+                        paid_amount: paid_amount,
+                        items: JSON.stringify(items)
+                    }, function (result, status) {
+                        window.location.href = '/sales/invoice/'+ result.invoice_id +/detail/;
+                    }
+                )
+            });
+
+            $('.new-customer').on('click', function () {
+                $('.existing-customer').hide();
+                $('.new-customer-form').show();
+                $('.customer').val('');
+            });
+
+            $('.added-customer').on('click', function () {
+                $('.existing-customer').show();
+                $('.new-customer-form').hide();
+                $('.customer_name').val('');
+                $('.customer_phone').val('');
+            });
+
+        });
+        $('.btn-primary').on('click', function () {
+            $('.item-error').hide();
+        });
+
+    </script>
+</body>
 {% endblock %}
+
+//print view page
