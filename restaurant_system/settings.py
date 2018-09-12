@@ -141,3 +141,7 @@ STATICFILES_DIRS = (
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(ROOT_DIR, 'media')
 
+try:
+    from restaurant_system.settings_local import *
+except ImportError:
+    pass

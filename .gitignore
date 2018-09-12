@@ -17,4 +17,4 @@
 
 # testing related files
 .coverage
-
+/restaurant_system/settings_local.py
