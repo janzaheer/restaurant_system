@@ -11,10 +11,11 @@
         <div class="row">
             <div class="col-md-6">
                 <br>
-                <a href="{% url 'menu_list' %}"><button type="button" class="btn btn-primary" style="float: left">Menu List</button></a>
-                <br><br><br>
+                <a href="{% url 'dashboard' %}"><button type="button" class="btn btn-primary">Home</button></a>
+                <a href="{% url 'menu_list' %}"><button type="button" class="btn btn-primary">Menu List</button></a>
+                <br><br>
                 <div class="content-panel">
-                    <h3 class="text-center">Create New Category</h3>
+                    <h3 class="text-center">Add New Item</h3>
                     {% if form.non_field_errors %}
                         <div>
                             {{ form.non_field_errors }}

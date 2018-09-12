@@ -171,9 +171,8 @@ class GenerateOrderAPIView(View):
             order_form = OrderForm(order_form_kwargs)
 
             if order_form.is_valid():
-                order_form.save()
-
-        return JsonResponse({'success': 'Success Message'})
+                order = order_form.save()
+                return JsonResponse({'order': order.id})
 
 
 class UpdateOrderAPIView(View):

@@ -12,10 +12,11 @@
         <div class="row">
             <div class="col-md-6">
                 <br>
-                <a href="{% url 'table_list' %}"><button type="button" class="btn btn-primary" style="float: left">Category List</button></a>
+                <a href="{% url 'dashboard' %}"><button type="button" class="btn btn-primary">Home</button></a>
+                <a href="{% url 'table_list' %}"><button type="button" class="btn btn-primary">Table List</button></a>
                 <br><br><br>
                 <div class="content-panel">
-                    <h3 class="text-center">Create New Category</h3>
+                    <h3 class="text-center">Table <small>No. {{ object.table_no }}</small></h3>
                     <div class="panel-body">
                         <form class="form-horizontal add-customer-form" action="{% url 'table_update' pk=object.id %}" method="post" >
                             <div class="form-group">
@@ -27,7 +28,7 @@
                                     <input type="text" class="form-control table_name" name="table_name" placeholder="Table Name (Optional)" value="{{ object.table_name }}"><br>
                                     <input type="text" class="form-control table_type" name="table_type" placeholder="Table Type (Optional)" value="{{ object.table_type }}">
                                     <br>
-                                    <button type="submit" class="btn btn-primary product-sub-btn" style="float: right">Save Category</button>
+                                    <button type="submit" class="btn btn-primary product-sub-btn" style="float: right">Update</button>
                                 </div>
                             </div>
                         </form>

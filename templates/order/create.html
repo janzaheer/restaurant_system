@@ -231,7 +231,7 @@
                         service_charges: service_charges,
                         items: JSON.stringify(items)
                     }, function (result, status) {
-                        window.location.href = '/order/list/';
+                        window.location.href = '/order/' + result.order + '/view/';
                     }
                 )
             });
