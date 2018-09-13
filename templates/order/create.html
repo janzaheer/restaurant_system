@@ -256,12 +256,18 @@
 	</script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.2.0/js/bootstrap.min.js"></script>
 <script>
-$('.btn').on('click', function() {
+$('#create-invoice').on('click', function() {
     var $this = $(this);
   $this.button('loading');
     setTimeout(function() {
        $this.button('reset');
    }, 5000);
+});
+
+$('.form-control').click (function () {
+    $('.list-error').hide();
+    checkDec(this);
+
 });
     </script>
 
