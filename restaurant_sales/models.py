@@ -19,7 +19,9 @@ class Table(DatedModel):
 
 class Order(DatedModel):
     table = models.ForeignKey(
-        Table, related_name='order_table', null=True, blank=True)
+        Table, related_name='order_table',
+        null=True, blank=True, on_delete=models.SET_NULL
+    )
 
     order_no = models.CharField(
         max_length=20, unique=True, blank=True, null=True

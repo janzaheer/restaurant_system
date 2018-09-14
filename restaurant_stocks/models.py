@@ -89,7 +89,8 @@ class Stock(models.Model):
 
 class StockIn(DatedModel):
     stock = models.ForeignKey(
-        Stock, related_name='stock_stockin', blank=True, null=True
+        Stock, related_name='stock_stockin'
+        , blank=True, null=True, on_delete=models.SET_NULL
     )
     new_stock = models.CharField(max_length=100, blank=True, null=True)
     price = models.DecimalField(
@@ -105,7 +106,8 @@ class StockIn(DatedModel):
 
 class StockOut(DatedModel):
     stock = models.ForeignKey(
-        Stock, related_name='stock_stockout', blank=True, null=True
+        Stock, related_name='stock_stockout',
+        blank=True, null=True, on_delete=models.SET_NULL
     )
     stock_out = models.CharField(max_length=100, blank=True, null=True)
 
