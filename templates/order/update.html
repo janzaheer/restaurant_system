@@ -37,7 +37,7 @@
                         <div>
                             <h2 class="text-center">Order</h2>
                             <h5 class="text-center">Behisht Arabian Cuisine</h5>
-                            <h6 class="text-center">Main Airport Road Near Buitems Quetta</h6>
+                            <h6 class="text-center">Main Airport Road Near Buitems Univeristy Quetta</h6>
                         </div>
                     </div>
                     <div class="col-xs-12 col-md-12">
@@ -45,6 +45,7 @@
                         <div class="row">
                             <div class="col-xs-6 col-md-6">
                                 <div><strong>Dining In:</strong> <span style="float: right" >{{ order.created_at }}</span></div><br>
+                                <span class="list-error" style="color: red; display: none">please add Table</span>
                                 <input type="text" class="form-control table_no" name="table_no" placeholder="Table No." list="table-list" value="{{ order.table.table_no }}">
                                 <datalist id="table-list">
                                     {% for table in tables %}
@@ -79,7 +80,7 @@
                                                         <option data-value="{{ menu.id }}" data-price="{{ menu.price }}" value="{{ menu.name }}">{{ menu.name }}</option>
                                                     {% endfor %}
                                                 </datalist>
-                                                <a class=' + $.opt.delete.substring(1) + ' href="javascript:;" title="Remove row">X</a>
+                                                <a class="delete" href="javascript:;" title="Remove row">X</a>
                                             </div>
                                         </td>
                                         <td><input class="form-control price" placeholder="Price" type="text" value="{{ item.price }}"></td>
@@ -154,6 +155,14 @@
                 $(this).parent().parent().parent().find('.price').val(item_price);
             });
             $('#create-invoice').live('click', function () {
+
+                if ($('.table_no').val()==""){
+                    $('.list-error').show();
+                }
+                else {
+                    $('.list-error').css('border' ,'none');
+                }
+
 
                 if ($('#item-name').hasClass('item-name') == false ) {
                     $('.item-error').show();
@@ -238,12 +247,18 @@
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.2.0/js/bootstrap.min.js"></script>
     <script>
-        $('.btn').on('click', function() {
+        $('#create-invoice').on('click', function() {
             var $this = $(this);
             $this.button('loading');
             setTimeout(function() {
                 $this.button('reset');
             }, 5000);
+        });
+        $('.table_no').click (function {
+
+            $('.list-error').hide();
+
+
         });
     </script>
 
