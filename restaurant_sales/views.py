@@ -89,7 +89,7 @@ class OrderUpdateView(TemplateView):
         order = Order.objects.get(id=self.kwargs.get('pk'))
         context.update({
             'order': order,
-            'table': Table.objects.all().order_by('table_no'),
+            'tables': Table.objects.all().order_by('table_no'),
             'menus': Menu.objects.all().order_by('name')
         })
         return context
