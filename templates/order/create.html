@@ -162,7 +162,7 @@
                 $(this).parent().parent().parent().find('.price').val(item_price);
             });
             $('#create-invoice').live('click', function () {
-            	if ($('#form-control').hasClass()==""){
+            	if ($('.table_no').val()==""){
             		$('.list-error').show();
             	}
             	else {
