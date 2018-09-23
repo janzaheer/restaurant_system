@@ -22,7 +22,7 @@
                     <thead>
                     <tr>
                         <th>S.No</th>
-                        <th><i class="fa fa-gavel"></i> Table No.</th>
+                        <th><i class="fa fa-gavel"></i> Table</th>
                         <th><i class="fa fa-bullhorn"></i> Bill No.</th>
                         <th><i class=" fa fa-edit"></i> Order No.</th>
                         <th><i class=" fa fa-bomb"></i> Quantities</th>
@@ -36,7 +36,7 @@
                     {% for order in orders %}
                         <tr>
                             <td>{{ forloop.counter }}</td>
-                            <td>{{ order.table.table_no }}</td>
+                            <td>{{ order.table.table_no }} - ({{order.table.table_type}})</td>
                             <td>{{ order.id|stringformat:"07d" }}</td>
                             <td>{{ order.order_no }}</td>
                             <td>{{ order.total_qty }}</td>

@@ -50,7 +50,7 @@
                             <datalist id="table-list" >
                                 {% for table in tables %}
 {#                                            <option data-id="{{ category.id }}" value="{{ category.id }}">{{ category.name }}</option>#}
-                                    <option value="{{ table.table_no }}"></option>
+                                    <option value="{{ table.table_no }}">{{table.table_type}}</option>
                                 {% endfor %}
                             </datalist><br>
 						</div>
@@ -85,7 +85,7 @@
                             <tr>
 								<td><strong>Total Quantity: </strong><span id="totalQty" style="color: red; font-weight: bold">0</span> Units</td>
 								<td></td>
-								<td class="text-right"><strong>Service Charges (<span id="service_charges">7</span><span>%</span>)</strong></td>
+								<td class="text-right"><strong>Service Charges (<span id="service_charges" contenteditable="true">7</span><span>%</span>)</strong></td>
                                 <td><span id="charges_amount">0</span></td>
 							</tr>
 {#							<tr>#}
@@ -229,6 +229,7 @@
                         grand_total: grand_total,
                         totalQty: totalQty,
                         service_charges: service_charges,
+                        charges_percent: $('#service_charges').text(),
                         items: JSON.stringify(items)
                     }, function (result, status) {
                         window.location.href = '/order/' + result.order + '/view/';

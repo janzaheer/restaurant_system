@@ -40,6 +40,9 @@ class Order(DatedModel):
     service_charges = models.DecimalField(
         max_digits=20, decimal_places=2, default=0, blank=True, null=True
     )
+    charges_percent = models.DecimalField(
+        max_digits=20, decimal_places=2, default=7, blank=True, null=True
+    )
     total_due = models.DecimalField(
         max_digits=20, decimal_places=2, default=0, blank=True, null=True
     )

@@ -109,13 +109,13 @@
     </div>
                 <div class="row">
                     <div class="col-lg-9 col-md-8 col-xs-8 text-right">Sub Total:</div>
-                    <div class="col-lg-3 col-md-8 col-xs-4 text-left"><strong>{{ order.sub_total }}</strong></div>
+                    <div class="col-lg-3 col-md-8 col-xs-4 text-left"><strong>{{ order.sub_total|floatformat:'-2' }}</strong></div>
                     <br><br>
-                    <div class="col-lg-9 col-xs-8 text-right">Service Charges 7%:</div>
-                    <div class="col-lg-3 col-md-8 col-xs-4 text-left"><strong>{{ order.service_charges }}</strong></div>
+                    <div class="col-lg-9 col-xs-8 text-right">Service Charges {{ order.charges_percent|floatformat:'-2' }}%:</div>
+                    <div class="col-lg-3 col-md-8 col-xs-4 text-left"><strong>{{ order.service_charges|floatformat:'-2' }}</strong></div>
                     <br><br>
                     <div class="col-lg-9 col-xs-8 text-right">Grand Total:</div>
-                    <div class="col-lg-3 col-md-8 col-xs-4 text-left"><strong>{{ order.total_due }}</strong></div>
+                    <div class="col-lg-3 col-md-8 col-xs-4 text-left"><strong>{{ order.total_due|floatformat:'-2' }}</strong></div>
                     <hr>
                     <div class="col-lg-12 text-center"><strong style="font-size: 20px">Thank You</strong></div>
                     <div class="col-lg-12 text-center"><h6 style="font-size: 12px">Software Developed By Partum Solutions</h6></div>

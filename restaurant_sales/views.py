@@ -140,6 +140,7 @@ class GenerateOrderAPIView(View):
         sub_total = self.request.POST.get('sub_total')
         due_total = self.request.POST.get('grand_total')
         service_charges = self.request.POST.get('service_charges')
+        charges_percent = self.request.POST.get('charges_percent')
         total_qty = self.request.POST.get('totalQty')
 
         purchased_items_id = []
@@ -164,6 +165,7 @@ class GenerateOrderAPIView(View):
                 'total_due': due_total,
                 'total_qty': total_qty,
                 'service_charges': service_charges,
+                'charges_percent': charges_percent,
                 'items': purchased_items_id,
 
             }
@@ -188,6 +190,7 @@ class UpdateOrderAPIView(View):
         sub_total = self.request.POST.get('sub_total')
         due_total = self.request.POST.get('grand_total')
         service_charges = self.request.POST.get('service_charges')
+        charges_percent = self.request.POST.get('charges_percent')
         total_qty = self.request.POST.get('totalQty')
         purchased_items_id = []
 
@@ -224,6 +227,7 @@ class UpdateOrderAPIView(View):
             order_obj.total_due = due_total
             order_obj.table = table
             order_obj.service_charges = service_charges
+            order_obj.charges_percent = charges_percent
             order_obj.total_qty = total_qty
             order_obj.items = purchased_items_id
             order_obj.save()
