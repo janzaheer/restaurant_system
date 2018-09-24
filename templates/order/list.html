@@ -28,6 +28,8 @@
                         <th><i class=" fa fa-bomb"></i> Quantities</th>
                         <th><i class=" fa fa-times"></i> Sub Total</th>
                         <th><i class=" fa fa-paypal"></i> Total Payment</th>
+                        <th><i class=" fa fa-paypal"></i> Order Type</th>
+                        <th><i class=" fa fa-pagelines"></i> Paid</th>
                         <th><i class=" fa fa-calendar"></i> Date</th>
                         <th>Actions</th>
                     </tr>
@@ -42,6 +44,8 @@
                             <td>{{ order.total_qty }}</td>
                             <td>{{ order.sub_total|floatformat:'-2' }}</td>
                             <td>{{ order.total_due|floatformat:'-2' }}</td>
+                            <td>{% if order.charges_percent == 0 %}Take Away{% else %}Table{% endif %}</td>
+                            <td>{% if order.paid %}<i class="fa fa-check-circle" style="color: #439D44"></i>{% else %}<i class="fa fa-times-circle" style="color: #C9312C"></i>{% endif %}</td>
                             <td>{{ order.created_at }}</td>
                             <td>
                                 <a href="{% url 'order_view' pk=order.id %}"><button class="btn btn-success btn-xs"><i class="fa fa-eye"></i></button></a>

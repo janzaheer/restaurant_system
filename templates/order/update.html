@@ -53,6 +53,15 @@
                                     {% endfor %}
                                 </datalist><br>
                             </div>
+                            <div class="col-xs-6 col-md-6">
+                                <div class="form-group">
+                                    <div><strong>Pay Option:</strong></div><br>
+                                    <select class="form-control pay_opt" id="pay_opt" name="pay_opt">
+                                        <option {% if order.paid %}selected="selected"{% endif %}>Paid</option>
+                                        <option {% if not order.paid %}selected="selected"{% endif %}>Not Paid</option>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -220,6 +229,7 @@
                         totalQty: totalQty,
                         service_charges: service_charges,
                         charges_percent: $('#service_charges').text(),
+                        pay_option: $('#pay_opt').val(),
                         items: JSON.stringify(items)
                     }, function (result, status) {
                         window.location.href = '/order/' + {{ order.id }} +'/view/';

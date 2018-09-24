@@ -46,6 +46,9 @@ class Order(DatedModel):
     total_due = models.DecimalField(
         max_digits=20, decimal_places=2, default=0, blank=True, null=True
     )
+    paid = models.BooleanField(
+        default=True
+    )
 
     def __unicode__(self):
         return '%s' % self.order_no
