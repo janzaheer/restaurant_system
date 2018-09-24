@@ -49,7 +49,7 @@
                                 <input type="text" class="form-control table_no" name="table_no" placeholder="Table No." list="table-list" value="{{ order.table.table_no }}">
                                 <datalist id="table-list">
                                     {% for table in tables %}
-                                        <option value="{{ table.table_no }}"></option>
+                                        <option value="{{ table.table_no }}">{{ table.table_type }}</option>
                                     {% endfor %}
                                 </datalist><br>
                             </div>
@@ -103,7 +103,7 @@
                                 <tr>
                                     <td><strong>Total Quantity: </strong><span id="totalQty" style="color: red; font-weight: bold">{{ order.total_qty }}</span> Units</td>
                                     <td></td>
-                                    <td class="text-right"><strong>Service Charges (<span id="service_charges">7</span><span>%</span>)</strong></td>
+                                    <td class="text-right"><strong>Service Charges (<span id="service_charges" contenteditable="true">{{ order.charges_percent|floatformat:'-2' }}</span><span>%</span>)</strong></td>
                                     <td><span id="charges_amount">{{ order.service_charges }}</span></td>
                                 </tr>
                                 <tr>
@@ -219,6 +219,7 @@
                         grand_total: grand_total,
                         totalQty: totalQty,
                         service_charges: service_charges,
+                        charges_percent: $('#service_charges').text(),
                         items: JSON.stringify(items)
                     }, function (result, status) {
                         window.location.href = '/order/' + {{ order.id }} +'/view/';

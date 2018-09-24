@@ -30,7 +30,7 @@
                         <th>Actions</th>
                     </tr>
                     </thead>
-                    <tbody class="order-table-body">
+                    <tbody class="stock-table-body">
                     {% for stock in stocks %}
                         <tr>
                             <td>{{ forloop.counter }}</td>
@@ -55,9 +55,9 @@
     </div>
     <script>
         $(document).ready(function(){
-          $(".search-order").on("keyup", function() {
+          $(".search-stock").on("keyup", function() {
             var value = $(this).val().toLowerCase();
-            $(".order-table-body tr").filter(function() {
+            $(".stock-table-body tr").filter(function() {
               $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
             });
           });

@@ -101,7 +101,7 @@ class StockIn(DatedModel):
     )
 
     def __unicode__(self):
-        return self.stock.item_name
+        return self.stock.item_name if self.stock else ''
 
 
 class StockOut(DatedModel):
@@ -112,4 +112,4 @@ class StockOut(DatedModel):
     stock_out = models.CharField(max_length=100, blank=True, null=True)
 
     def __unicode__(self):
-        return self.stock.item_name
+        return self.stock.item_name if self.stock else ''
