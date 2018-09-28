@@ -99,6 +99,11 @@ class StockIn(DatedModel):
     total = models.DecimalField(
         max_digits=20, decimal_places=2, default=0, blank=True, null=True
     )
+    closed_stock = models.ForeignKey(
+        'restaurant_stocks.StockItemClosed', related_name='stock_in_closed',
+        blank=True, null=True, on_delete=models.SET_NULL
+    )
+    is_closed = models.BooleanField(default=False)
 
     def __unicode__(self):
         return self.stock.item_name if self.stock else ''
@@ -110,6 +115,46 @@ class StockOut(DatedModel):
         blank=True, null=True, on_delete=models.SET_NULL
     )
     stock_out = models.CharField(max_length=100, blank=True, null=True)
+    is_closed = models.BooleanField(default=False)
 
     def __unicode__(self):
         return self.stock.item_name if self.stock else ''
+
+
+class StockClosed(models.Model):
+    closing_date = models.DateTimeField(blank=True, null=True)
+    closed_stock_in = models.CharField(max_length=100, blank=True, null=True)
+    closed_stock_out = models.CharField(max_length=100, blank=True, null=True)
+    closed_stock_amount = models.DecimalField(
+        max_digits=100, decimal_places=2, default=0, blank=True, null=True
+    )
+    remaining_stock = models.CharField(
+        max_length=100, blank=True, null=True,
+        help_text="Difference of Stock In and Stock Out"
+    )
+
+    def __unicode__(self):
+        return '%s' % self.closing_date.strftime('%b %d, %Y - %I:%M %p')
+
+
+class StockItemClosed(models.Model):
+    stock_closed = models.ForeignKey(
+        StockClosed, related_name='stock_closed', on_delete=models.SET_NULL,
+        null=True, blank=True
+    )
+    stock = models.ForeignKey(
+        Stock, related_name='stock_item_closed',
+        on_delete=models.SET_NULL, null=True, blank=True
+    )
+    item_stock_in = models.CharField(max_length=100, blank=True, null=True)
+    item_stock_out = models.CharField(max_length=100, blank=True, null=True)
+    closed_stock_amount = models.DecimalField(
+        max_digits=100, decimal_places=2, default=0, blank=True, null=True
+    )
+    remaining_stock_item = models.CharField(
+        max_length=100, blank=True, null=True,
+        help_text='Difference of Item Stock In and Item Stock Out'
+    )
+
+    def __unicode__(self):
+        return self.stock.item_name
