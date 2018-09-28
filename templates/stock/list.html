@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
     <div class="container">
@@ -7,60 +8,118 @@
                 <br>
                 <a href="{% url 'dashboard' %}"><button type="button" class="btn btn-primary">Home</button></a>
                 <a href="{% url 'stock_new' %}"><button type="button" class="btn btn-primary">New Stock</button></a>
+                <button id="close-stock" class="btn btn-danger close-stock">Close Stock</button>
                 <br><br>
                 <div class="content-panel table-responsive">
-                    <h2 class="text-center">Behisht Stocks</h2><div class="input-group custom-search-form col-md-4" style="left: 5px">
-                    <input type="text" class="form-control search-stock" placeholder="Search...">
-                    <span class="input-group-btn">
-                        <button class="btn btn-default" type="button">
-                            <i class="fa fa-search"></i>
-                        </button>
-                    </span>
-                </div>
-                <hr>
-                <table class="table table-striped table-advance table-hover item-table">
-                    <thead>
-                    <tr>
-                        <th>S.No</th>
-                        <th><i class="fa fa-gavel"></i> Item Name</th>
-                        <th><i class="fa fa-bullhorn"></i> Unit Type.</th>
-                        <th><i class=" fa fa-edit"></i> Stock In</th>
-                        <th><i class=" fa fa-bomb"></i> Stock Out</th>
-                        <th><i class=" fa fa-times"></i> Remaining Stock</th>
-                        <th>Actions</th>
-                    </tr>
-                    </thead>
-                    <tbody class="stock-table-body">
-                    {% for stock in stocks %}
+                    <h2 class="text-center">Behisht Stocks</h2>
+                    <hr>
+                    <div class="row" style="padding-left: 20px; padding-bottom: 20px; padding-right: 20px">
+                        <div class="col-lg-4">
+                            <div class="well">
+                                <h3>Overall Stock Details</h3>
+                                <span>
+                                    <strong>Closing Date:</strong> Not Defined.<br>
+                                    <strong>Stock In:</strong> {{ total_stock_in }}<br>
+                                    <strong>Stock Out:</strong> {{ total_stock_out }}<br>
+                                    <strong>Remaining Stock:</strong> {{ total_remaining_stock }}<br>
+                                    <strong>Stock Amount:</strong> Rs. {{ total_stock_amount|floatformat:'-2' }}<br>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="well">
+                                <h3>Latest Closed Stock</h3>
+                                <span>
+                                    <strong>Closing Date:</strong> {{ last_closing_date }}<br>
+                                    <strong>Stock In:</strong> {{ last_stock_in }}<br>
+                                    <strong>Stock Out:</strong> {{ last_stock_out }}<br>
+                                    <strong>Remaining Stock:</strong> {{ last_remaining_stock }}<br>
+                                    <strong>Stock Amount:</strong> Rs. {{ last_stock_closed_amount|floatformat:'-2' }}<br>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="well">
+                                <h3>Current Stock Details</h3>
+                                <span>
+                                    <strong>Date:</strong> {{ date }}<br>
+                                    <strong>Stock In:</strong> {{ current_stock_in }}<br>
+                                    <strong>Stock Out:</strong> {{ current_stock_out }}<br>
+                                    <strong>Remaining Stock:</strong> {{ current_remaining_stock }}<br>
+                                    <strong>Stock Amount:</strong> Rs. {{ current_stock_amount|floatformat:'-2' }}<br>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-group custom-search-form col-md-4" style="left: 5px">
+                        <input type="text" class="form-control search-stock" placeholder="Search...">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="button">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </span>
+                    </div>
+                    <hr>
+                    <table class="table table-striped table-advance table-hover item-table">
+                        <thead>
                         <tr>
-                            <td>{{ forloop.counter }}</td>
-                            <td>{{ stock.item_name }}</td>
-                            <td>{{ stock.unit_type }}</td>
-                            <td>{{ stock.total_stock_in }}</td>
-                            <td>{{ stock.total_stock_out }}</td>
-                            <td>{{ stock.remaining_stock }}</td>
-                            <td>
-                                <a href="{% url 'stock_in' pk=stock.id %}"><button class="btn btn-primary btn-xs"><i class="fa fa-plus"></i></button></a>
-                                <a href="{% url 'stock_details' pk=stock.id %}"><button class="btn btn-success btn-xs"><i class="fa fa-eye"></i></button></a>
-                                <a href="{% url 'stock_out' pk=stock.id %}"><button class="btn btn-danger btn-xs"><i class="fa fa-credit-card"></i></button></a>
-{#                                <a href="#"><button class="btn btn-danger btn-xs"><i class="fa  fa-trash-o"></i></button></a>#}
-                            </td>
+                            <th>S.No</th>
+                            <th><i class="fa fa-gavel"></i> Item Name</th>
+                            <th><i class="fa fa-bullhorn"></i> Unit Type.</th>
+                            <th><i class=" fa fa-edit"></i> Stock In</th>
+                            <th><i class=" fa fa-bomb"></i> Stock Out</th>
+                            <th><i class=" fa fa-times"></i> Remaining Stock</th>
+                            <th>Actions</th>
                         </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody class="stock-table-body">
+                        {% for stock in stocks %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{ stock.item_name }}</td>
+                                <td>{{ stock.unit_type }}</td>
+                                <td>{{ stock.total_stock_in }}</td>
+                                <td>{{ stock.total_stock_out }}</td>
+                                <td>{{ stock.remaining_stock }}</td>
+                                <td>
+                                    <a href="{% url 'stock_in' pk=stock.id %}"><button class="btn btn-primary btn-xs"><i class="fa fa-plus"></i></button></a>
+                                    <a href="{% url 'stock_details' pk=stock.id %}"><button class="btn btn-success btn-xs"><i class="fa fa-eye"></i></button></a>
+                                    <a href="{% url 'stock_out' pk=stock.id %}"><button class="btn btn-danger btn-xs"><i class="fa fa-credit-card"></i></button></a>
+                                    <a href="{% url 'closed_item_logs' pk=stock.id %}"><button class="btn btn-warning btn-xs"><i class="fa fa-area-chart"></i></button></a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
     </div>
+{#    <script src="{% static 'bootstrap/cdn/bootstrap.min.js' %}"></script>#}
+{#    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.2.0/js/bootstrap.min.js"></script>#}
     <script>
         $(document).ready(function(){
-          $(".search-stock").on("keyup", function() {
-            var value = $(this).val().toLowerCase();
-            $(".stock-table-body tr").filter(function() {
-              $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            $(".search-stock").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                $(".stock-table-body tr").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
             });
-          });
+
+            $('.close-stock').on('click', function(){
+
+                $(this).addClass('disabled');
+                $(this).html('<i class="fa fa-spinner fa-spin"></i> Loading...');
+                if(confirm('Are you sure you want to make a monthly closing')) {
+                    $.get("{% url 'close_stock' %}", function(results, status){
+                        window.location.href = '{% url 'stock_list' %}';
+                    });
+                }else {
+                    $(this).removeClass('disabled');
+                    $(this).html('Close Stock');
+                    return false;
+                }
+            });
         });
     </script>
 {% endblock %}

@@ -12,11 +12,37 @@
                 <br><br>
                 <div class="content-panel">
                     <h2 class="text-center">{{ stock.item_name|title }} <small>Stock Detail</small></h2>
-                    <div class="well">
-                        <strong>Total Stocks:</strong> {{ stock.total_stock_in }}<br>
-                        <strong>Total Stocks Out:</strong> {{ stock.total_stock_out }}<br>
-                        <strong>Remaining Stocks:</strong> {{ stock.remaining_stock }}<br>
-                        <strong>Stocks Total Price (pkr):</strong> {{ stock.stock_total_price|floatformat:'-2' }}<br>
+                    <div class="row" style="padding: 20px">
+                        <div class="col-lg-4">
+                            <div class="well" style="padding-top: 0px">
+                                <h3>Overall Details</h3>
+                                <strong>Date:</strong>  Not Defined.<br>
+                                <strong>Total Stocks:</strong> {{ stock.total_stock_in }}<br>
+                                <strong>Total Stocks Out:</strong> {{ stock.total_stock_out }}<br>
+                                <strong>Remaining Stocks:</strong> {{ stock.remaining_stock }}<br>
+                                <strong>Stocks Total Price (pkr):</strong> {{ stock.stock_total_price|floatformat:'-2' }}<br>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="well" style="padding-top: 0px">
+                                <h3>Latest Closing Details</h3>
+                                <strong>Closing Date:</strong> {{ last_closing_date }}<br>
+                                <strong>Total Stocks:</strong> {{ last_stock_in }}<br>
+                                <strong>Total Stocks Out:</strong> {{ last_stock_out }}<br>
+                                <strong>Remaining Stocks:</strong> {{ last_remaining_stock }}<br>
+                                <strong>Stocks Total Price (pkr):</strong> {{ last_stock_amount|floatformat:'-2' }}<br>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="well" style="padding-top: 0px">
+                                <h3>Current Details</h3>
+                                <strong>Date:</strong> {{ date }}<br>
+                                <strong>Total Stocks:</strong> {{ current_stock_in }}<br>
+                                <strong>Total Stocks Out:</strong> {{ current_stock_out }}<br>
+                                <strong>Remaining Stocks:</strong> {{ current_remaining_stock }}<br>
+                                <strong>Stocks Total Price (pkr):</strong> {{ current_stock_amount|floatformat:'-2' }}<br>
+                            </div>
+                        </div>
                     </div>
                     {% if stockin.exists %}
                         <div class="col-lg-6 col-md-12 col-sm-12">
