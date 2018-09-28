@@ -13,6 +13,7 @@ from dateutil.relativedelta import relativedelta
 
 from restaurant_sales.models import Order
 from restaurant_stocks.models import Stock, StockIn, StockOut
+from restaurant_stocks.models import StockClosed
 
 
 class DailyOrdersAPIView(View):
@@ -208,3 +209,27 @@ class MonthlyStocksAPIView(View):
         return JsonResponse({
             'stocks': stocks
         })
+
+
+class StockCLosedAPIView(View):
+    def get(self, request, *args, **kwargs):
+        closed_stocks = StockClosed.objects.all()
+        if closed_stocks.exists():
+            closed_stocks = closed_stocks[:12]
+        else:
+            pass
+
+        results = []
+
+        for closed_stock in closed_stocks:
+            context = {
+                'date': closed_stock.closing_date.strftime('%b %d, %Y'),
+                'stock_in': closed_stock.closed_stock_in,
+                'stock_out': closed_stock.closed_stock_out,
+                'stock_amount': closed_stock.closed_stock_amount
+            }
+            results.append(context)
+
+        return JsonResponse(
+            {'closed_stocks': results}
+        )

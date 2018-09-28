@@ -143,17 +143,17 @@
                 <div class="col-lg-8">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <i class="fa fa-bar-chart-o fa-fw"></i> Daily Stock Chart
+                            <i class="fa fa-bar-chart-o fa-fw"></i> Closed Stock Chart
                         </div>
                         <div class="panel-body">
-                            <div id="daily-stocks" style="min-width: 310px; height: 500px; margin: 0 auto"></div>
+                            <div id="closed-stocks" style="min-width: 310px; height: 500px; margin: 0 auto"></div>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-4">
                     <div class="panel panel-default" style="height: 571px">
                         <div class="panel-heading">
-                            <i class="fa fa-bell fa-fw"></i> Daily Stock Reports
+                            <i class="fa fa-bell fa-fw"></i> Closed Stock Reports
                         </div>
                         <div class="panel-body">
                             <table class="table table-striped table-advance table-hover daily-stocks-table">
@@ -162,6 +162,7 @@
                                     <th><i class=""></i>Date</th>
                                     <th><i class=""></i>Stock In</th>
                                     <th><i class=""></i>Stock Out</th>
+                                    <th><i class=""></i>Stock Amount</th>
                                 </tr>
                                 </thead>
                                 <tbody class="daily-stocks-tbody">
@@ -171,40 +172,6 @@
                     </div>
                 </div>
             </div>
-
-            <div class="row">
-                <div class="col-lg-8">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <i class="fa fa-bar-chart-o fa-fw"></i> Monthly Stock Chart
-                        </div>
-                        <div class="panel-body">
-                            <div id="monthly-stocks" style="min-width: 310px; height: 500px; margin: 0 auto"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="panel panel-default" style="height: 571px">
-                        <div class="panel-heading">
-                            <i class="fa fa-bell fa-fw"></i> Monthly Stock Reports
-                        </div>
-                        <div class="panel-body">
-                            <table class="table table-striped table-advance table-hover monthly-stocks-table">
-                                <thead>
-                                <tr>
-                                    <th><i class=""></i>Date</th>
-                                    <th><i class=""></i>Stock In</th>
-                                    <th><i class=""></i>Stock Out</th>
-                                </tr>
-                                </thead>
-                                <tbody class="monthly_stocks-tbody">
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
         </div>
         <script>
 
@@ -352,24 +319,26 @@
         </script>
 
         <script>
-            $.get('/stocks/daily/api/', function(results, status){
+            $.get('/closed/stock/api/', function(results, status){
 
                 var stocks_in = [];
                 var stocks_date = [];
                 var stocks_out = [];
+                var stocks_amount = [];
                 var daily_stocks = "";
                 var counter = 1;
-                $.each(results.stocks, function(key, stock){
+                $.each(results.closed_stocks, function(key, closed_stock){
 
-                    daily_stocks += "<tr><td>" + stock.date + "</td><td>" + stock.total_stock_in + "</td><td>" + stock.total_stock_out + "</td></tr>"
+                    daily_stocks += "<tr><td>" + closed_stock.date + "</td><td>" + closed_stock.stock_in + "</td><td>" + closed_stock.stock_out + "</td><td>" + closed_stock.stock_amount + "</td></tr>";
                     counter += 1;
-                    stocks_in.push(parseFloat(stock.total_stock_in));
-                    stocks_out.push(stock.total_stock_out);
-                    stocks_date.push(stock.date);
+                    stocks_in.push(parseFloat(closed_stock.stock_in));
+                    stocks_out.push(parseFloat(closed_stock.stock_out));
+                    stocks_date.push(closed_stock.date);
+                    stocks_amount.push(parseFloat(closed_stock.stock_amount));
                 });
                 $('.daily-stocks-tbody').html(daily_stocks);
 
-                Highcharts.chart('daily-stocks', {
+                Highcharts.chart('closed-stocks', {
                     chart: {
                         type: 'area'
                     },
@@ -422,77 +391,4 @@
 
             });
         </script>
-
-        <script>
-            $.get('/stocks/monthly/api/', function(results, status){
-
-                var stocks_in = [];
-                var stocks_date = [];
-                var stocks_out = [];
-                var daily_stocks = "";
-                var counter = 1;
-                $.each(results.stocks, function(key, stock){
-
-                    daily_stocks += "<tr><td>" + stock.date + "</td><td>" + stock.total_stock_in + "</td><td>" + stock.total_stock_out + "</td></tr>"
-                    counter += 1;
-                    stocks_in.push(parseFloat(stock.total_stock_in));
-                    stocks_out.push(stock.total_stock_out);
-                    stocks_date.push(stock.date);
-                });
-                $('.monthly_stocks-tbody').html(daily_stocks);
-
-                Highcharts.chart('monthly-stocks', {
-                    chart: {
-                        type: 'area'
-                    },
-                    title: {
-                        text: ''
-                    },
-                    subtitle: {
-                        text: ''
-                    },
-                    xAxis: {
-                        categories: stocks_date.reverse(),
-                        tickmarkPlacement: 'on',
-                        title: {
-                            enabled: false
-                        }
-                    },
-                    yAxis: {
-                        title: {
-                            text: ' '
-                        },
-                        labels: {
-                            formatter: function () {
-                                return this.value;
-                            }
-                        }
-                    },
-                    tooltip: {
-                        split: true,
-                        valueSuffix: ''
-                    },
-                    plotOptions: {
-                        area: {
-                            stacking: 'normal',
-                            lineColor: '#666666',
-                            lineWidth: 1,
-                            marker: {
-                                lineWidth: 1,
-                                lineColor: '#666666'
-                            }
-                        }
-                    },
-                    series: [{
-                        name: 'Stocks In',
-                        data: stocks_in.reverse()
-                    }, {
-                        name: 'Stocks Out',
-                        data: stocks_out.reverse()
-                    }]
-                });
-
-            });
-        </script>
-
 {% endblock %}
