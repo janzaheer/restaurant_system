@@ -31,12 +31,13 @@ from restaurant_sales.views import (
 )
 from restaurant_stocks.views import (
     StockListView, StockFormView, StockInFormView, StockOutFormView,
-    StockDetailView
+    StockDetailView, CloseStockView, StockClosedItemLogsView
 )
 
 from common.reports_api import (
     DailyOrdersAPIView, MonthlyOrderAPIView,
     DailyStocksAPIView, MonthlyStocksAPIView,
+    StockCLosedAPIView,
 )
 
 
@@ -138,6 +139,10 @@ urlpatterns = [
         UpdateOrderAPIView.as_view(),
         name='order_update_api'
     ),
+    url(
+        r'^closed/stock/api/$', StockCLosedAPIView.as_view(),
+        name='closed_stock_api'
+    ),
 
     # Reports Url
     url(
@@ -196,6 +201,15 @@ urlpatterns = [
         r'^stock/(?P<pk>\d+)/details/$',
         StockDetailView.as_view(),
         name='stock_details'
+    ),
+    url(
+        r'^stock/closed/$', CloseStockView.as_view(),
+        name='close_stock'
+    ),
+    url(
+        r'^stock/(?P<pk>\d+)/closed/logs/$',
+        StockClosedItemLogsView.as_view(),
+        name='closed_item_logs'
     ),
 ]
 
