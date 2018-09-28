@@ -1,6 +1,9 @@
 from django import forms
 
-from restaurant_stocks.models import StockIn, StockOut, Stock
+from restaurant_stocks.models import (
+    StockIn, StockOut, Stock,
+    StockClosed, StockItemClosed
+)
 
 
 class StockForm(forms.ModelForm):
@@ -18,4 +21,16 @@ class StockInForm(forms.ModelForm):
 class StockOutForm(forms.ModelForm):
     class Meta:
         model = StockOut
+        fields = '__all__'
+
+
+class ClosedStockForm(forms.ModelForm):
+    class Meta:
+        model = StockClosed
+        fields = '__all__'
+
+
+class ClosedStockItemForm(forms.ModelForm):
+    class Meta:
+        model = StockItemClosed
         fields = '__all__'
