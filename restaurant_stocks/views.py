@@ -215,8 +215,8 @@ class StockDetailView(TemplateView):
 
         context.update({
             'stock': stock,
-            'stockin': stock.stock_stockin.all(),
-            'stockout': stock.stock_stockout.all(),
+            'stockin': stock.stock_stockin.all().order_by('-created_at'),
+            'stockout': stock.stock_stockout.all().order_by('-created_at'),
             'current_stock_in': current_stock_in,
             'current_stock_out': current_stock_out,
             'current_stock_amount': current_stock_amount,
