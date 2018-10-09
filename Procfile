@@ -1,1 +1,1 @@
-web: gunicorn resturant_system.wsgi --log-file -
+web: gunicorn restaurant_system.wsgi --log-file -
