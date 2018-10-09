@@ -71,7 +71,8 @@ TEMPLATES = [
                 'django.template.context_processors.static',
                 'django.template.context_processors.tz',
                 'django.contrib.messages.context_processors.messages',
-                'django.template.context_processors.request'
+                'django.template.context_processors.request',
+                'common.context_processors.settings_context',
             ]
         },
     },
@@ -140,6 +141,19 @@ STATICFILES_DIRS = (
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(ROOT_DIR, 'media')
+
+
+# Restaurant Name
+# Restaurant Tag
+
+RESTAURANT_NAME = 'Partum Restaurant System'
+RESTAURANT_TAG = 'Partum Solutions | Business Softwares and Solutions Providers'
+RESTAURANT_SHORT_NAME = 'Partum'
+RESTAURANT_ADDRESS = (
+    'Office # 11, 2nd Floor, Al-Zain Centre, '
+    'Zarghoon Road Quetta, Pakistan'
+)
+
 
 try:
     from restaurant_system.settings_local import *
