@@ -38,7 +38,7 @@
 
            <ul class="nav navbar-top-links navbar-right">
                 <li>
-                    <a><span class="real-date-main" id="real-date-main" style="color: #17D4FE; font-size: 15px; font-family: Orbitron; letter-spacing: 7px; font-weight: bold;">Coming here</span></a>
+                    <a><span class="real-date-main" id="real-date-main" style="color: #17D4FE; font-size: 15px; font-family: Orbitron; letter-spacing: 7px; font-weight: bold;"></span></a>
                 </li>
             </ul>
         </div>
@@ -82,7 +82,7 @@
                 m = (m < 10) ? "0" + m : m;
                 s = (s < 10) ? "0" + s : s;
 
-                var time = h + ":" + m + ":" + s + " " + session;
+                var time = h + ":" + m + ":" + s;
                 document.getElementById("real-date-main").innerText = time;
                 document.getElementById("real-date-main").textContent = time;
                 setTimeout(showTime, 1000);
