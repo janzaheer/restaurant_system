@@ -25,7 +25,7 @@ SECRET_KEY = '4clrbo-mfronqoh18vaats+i@$+@e739j#jm2p69f2=sv6g#%e'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['partum-restaurant.herokuapp.com', '*']
 
 
 # Application definition
