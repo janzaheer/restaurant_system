@@ -22,7 +22,7 @@ from common.views import DashboardView, ReportsView
 from restaurant_menu.views import (
     CategoryList, CategoryFormView, CategoryUpdateView, CategoryDeleteView,
     MenuListView, MenuFormView, MenuUpdateView, MenuDeleteView,
-    MenuItemPurchasedLogsView
+    MenuItemPurchasedLogsView, PurchasedDetailedLogsView
 )
 from restaurant_sales.views import (
     TableListView, TableFormView, TableUpdateView, TableDeleteView,
@@ -174,8 +174,18 @@ urlpatterns = [
         name='logs'
     ),
     url(
-        r'^logs/(?P<date>[a-zA-Z0-9_-]+)/$', MenuItemPurchasedLogsView.as_view(),
+        r'^logs/(?P<date>[a-zA-Z0-9_-]+)/$',
+        MenuItemPurchasedLogsView.as_view(),
         name='logs_date'
+    ),
+    url(
+        r'^detailed/logs/$', PurchasedDetailedLogsView.as_view(),
+        name='detailed_logs'
+    ),
+    url(
+        r'^detailed/logs/(?P<date>[a-zA-Z0-9_-]+)/$',
+        PurchasedDetailedLogsView.as_view(),
+        name='detailed_logs_date'
     ),
 
     # Stocks Url
