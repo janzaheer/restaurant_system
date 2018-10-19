@@ -1,15 +1,18 @@
 {% extends 'base.html' %}
 
 {% block content %}
+    {% load menu_utils %}
+
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
         <div class="container">
         <div class="row">
             <div class="col-lg-12">
                 <br>
                 <a href="{% url 'dashboard' %}"><button type="button" class="btn btn-primary">Home</button></a>
+                <a href="{% url 'detailed_logs' %}"><button type="button" class="btn btn-primary">Daily Detailed Logs</button></a>
                 <br><br>
                 <div class="content-panel table-responsive">
-                    <h2 class="text-center">{{ RESTAURANT_SHORT_NAME }} Order Item Logs</h2>
+                    <h2 class="text-center">{{ RESTAURANT_SHORT_NAME }} Daily Logs</h2>
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="custom-search-form col-md-4">
@@ -18,12 +21,12 @@
                             </div>
                             <div class="col-md-4">
                                 <label>Filter By Date</label>
-                                <input type="date" class="form-control date" placeholder="Filter by Date" value="{{ logs_date }}">
+                                <input type="date" class="form-control date" placeholder="Filter by Date" value="{% if today_date %}{{ today_date }}{% else %}{{ logs_date }}{% endif %}">
                             </div>
                         </div>
                     </div>
                     <div style="padding: 10px">
-                        <span style="float: right"><strong>Total Price:</strong> Rs. {{ total|floatformat:'-2' }}</span>
+                        <span style="float: right"><strong>Logs Date: </strong> {% if today_date %}{{ today_date }}{% endif %}{% if logs_date %}{{ logs_date }}{% endif %} |  <strong>Total Price:</strong> Rs. {{ total|floatformat:'-2' }}</span>
                     </div>
                     <hr>
                     <table class="table table-striped table-advance table-hover item-table table-responsive">
@@ -31,27 +34,33 @@
                         <tr>
                             <th>S.No</th>
                             <th><i class="fa fa-gavel"></i> Item Name</th>
-                            <th><i class="fa fa-bullhorn"></i> Order No.</th>
-                            <th><i class=" fa fa-edit"></i> Bill No.</th>
-                            <th><i class=" fa fa-bomb"></i> Quantity</th>
-                            <th><i class=" fa fa-tag"></i> Total Price</th>
-                            <th><i class=" fa fa-calendar"></i> Date</th>
+                            <th><i class="fa fa-bullhorn"></i> Total Quantity</th>
+                            <th><i class=" fa fa-edit"></i> Total Orders</th>
                         </tr>
                         </thead>
                         <tbody class="logs-table-body">
-                        {% for item in items %}
+                        {% if not object_list %}
+                            <tr><td colspan="4" class="text-center">No Logs Found</td></tr>
+                        {% endif %}
+                        {% for item in object_list %}
                             <tr>
-                                <td>{{ forloop.counter }}</td>
-                                <td>{{ item.menu.name }}</td>
-                                <td>{{ item.get_order_no }}</td>
-                                <td>{{ item.get_bill_no|stringformat:"07d" }}</td>
-                                <td>{{ item.quantity }}</td>
-                                <td>{{ item.total_price|floatformat:'-2' }}</td>
-                                <td>{{ item.created_at }}</td>
+                                <td>{% if forloop.last and forloop.counter > 99 %}{{ page_obj.number }}00{% else %}{% if page_obj.number > 1 %}{% subtract page_obj.number 1 %}{% endif %}{{ forloop.counter }}{% endif %}</td>
+                                <td>{{ item.menu__name}}</td>
+                                <td>{{ item.total }}</td>
+                                <td>{{ item.orders }}</td>
                             </tr>
                         {% endfor %}
                         </tbody>
                     </table>
+                    {% if is_paginated %}
+                        <div class="text-right">
+                            <ul class="pagination" style="padding: 10px; margin: auto;">
+                                {% for p in page_obj.paginator.page_range %}
+                                    <li {% if p == page_obj.number %}class="active"{% endif %}><a href="?page={{ p }}" data-original-title="" title="">{{ forloop.counter }}</a></li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endif %}
                 </div>
             </div>
         </div>
