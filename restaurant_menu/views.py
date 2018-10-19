@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 from django.shortcuts import render
-from django.db.models import Sum
+from django.db.models import Sum, Count
 from django.views.generic import (
     FormView, TemplateView, ListView, UpdateView, DeleteView
 )
 from django.http import HttpResponseRedirect, Http404
+from django.utils import timezone
 
 from restaurant_menu.models import Menu, Category, PurchaseMenuItem
 from restaurant_menu.forms import CategoryForm, MenuForm
@@ -128,43 +129,94 @@ class CategoryDeleteView(DeleteView):
         return self.post(request, *args, **kwargs)
 
 
-class MenuItemPurchasedLogsView(TemplateView):
+class MenuItemPurchasedLogsView(ListView):
     template_name = 'purchased_items_logs.html'
-    # model = PurchaseMenuItem
-    # paginate_by = 10
-    # is_paginated = True
+    model = PurchaseMenuItem
+    paginate_by = 100
+    is_paginated = True
+
+    def __init__(self, *args, **kwargs):
+        super(MenuItemPurchasedLogsView, self).__init__(*args, **kwargs)
+        self.logs_date = ''
+        self.today_date = ''
+
+    def get_queryset(self):
+        self.logs_date = self.kwargs.get('date')
+        if self.logs_date:
+            logs_date = self.logs_date.split('-')
+            year = logs_date[0]
+            month = logs_date[1]
+            day = logs_date[2]
+            try:
+                queryset = PurchaseMenuItem.objects.filter(
+                    created_at__year=year,
+                    created_at__month=month,
+                    created_at__day=day,
+                ).values('menu__name').annotate(
+                    orders=Count('menu__name'),
+                    total=Sum('quantity')
+                )
+            except:
+                queryset = []
+        else:
+            self.today_date = timezone.now().date()
+
+            # need to use this in new for logs
+            queryset = PurchaseMenuItem.objects.filter(
+                created_at__year=self.today_date.year,
+                created_at__month=self.today_date.month,
+                created_at__day=self.today_date.day,
+            ).values('menu__name').annotate(
+                orders=Count('menu__name'),
+                total=Sum('quantity')
+            )
+
+        return queryset
 
     def get_context_data(self, **kwargs):
         context = super(
             MenuItemPurchasedLogsView, self).get_context_data(**kwargs)
 
-        logs_date = self.kwargs.get('date')
-        if logs_date:
-            try:
-                logs_date = logs_date.split('-')
-                year = logs_date[0]
-                month = logs_date[1]
-                day = logs_date[2]
-                items = PurchaseMenuItem.objects.filter(
-                    created_at__year=year, created_at__month=month,
-                    created_at__day=day).order_by('created_at')
-
-                context.update({
-                    'logs_date': self.kwargs.get('date')
-                })
-            except (TypeError, IndexError):
-                items = PurchaseMenuItem.objects.all().order_by('created_at')
-        else:
-            items = PurchaseMenuItem.objects.all().order_by('created_at')
-
-        if items.exists():
-            total = items.aggregate(Sum('total_price'))
+        queryset = self.get_queryset()
+        if queryset:
+            total = queryset.aggregate(Sum('total_price'))
             total = total.get('total_price__sum') or 0
         else:
             total = 0
 
         context.update({
-            'items': items,
-            'total': total
+            'total': total,
+            'today_date': (
+                timezone.now().strftime('%Y-%m-%d')
+                if self.today_date else None),
+            'logs_date': self.logs_date,
         })
         return context
+
+
+class PurchasedDetailedLogsView(MenuItemPurchasedLogsView):
+    template_name = 'logs/detailed_purchased_logs.html'
+
+    def get_queryset(self):
+        self.logs_date = self.kwargs.get('date')
+        if self.logs_date:
+            logs_date = self.logs_date.split('-')
+            year = logs_date[0]
+            month = logs_date[1]
+            day = logs_date[2]
+            try:
+                queryset = PurchaseMenuItem.objects.filter(
+                    created_at__year=year,
+                    created_at__month=month,
+                    created_at__day=day).order_by('created_at')
+            except:
+                queryset = []
+        else:
+            self.today_date = timezone.now().date()
+            queryset = PurchaseMenuItem.objects.filter(
+                created_at__year=self.today_date.year,
+                created_at__month=self.today_date.month,
+                created_at__day=self.today_date.day,
+            ).order_by('created_at')
+
+        return queryset
