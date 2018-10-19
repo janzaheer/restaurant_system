@@ -35,7 +35,7 @@
                     </tr>
                     </thead>
                     <tbody class="order-table-body">
-                    {% for order in orders %}
+                    {% for order in object_list %}
                         <tr>
                             <td>{{ forloop.counter }}</td>
                             <td>{{ order.table.table_no }} - ({{order.table.table_type}})</td>
@@ -58,6 +58,15 @@
                     {% endfor %}
                     </tbody>
                 </table>
+                {% if is_paginated %}
+                    <div class="text-center">
+                        <ul class="pagination" style="padding: 10px; margin: auto;">
+                            {% for p in page_obj.paginator.page_range %}
+                                <li {% if p == page_obj.number %}class="active"{% endif %}><a href="?page={{ p }}" data-original-title="" title="">{{ forloop.counter }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
                 </div>
             </div>
         </div>

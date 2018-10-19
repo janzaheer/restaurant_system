@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 import json
 
 from django.views.generic import (
-    FormView, TemplateView, View, UpdateView, DeleteView
+    FormView, TemplateView, View, UpdateView, DeleteView, ListView
 )
 from django.http import HttpResponseRedirect, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
@@ -58,15 +58,15 @@ class TableDeleteView(DeleteView):
         return self.post(request, *args, **kwargs)
 
 
-class OrderListView(TemplateView):
+class OrderListView(ListView):
     template_name = 'order/list.html'
+    model = Order
+    paginate_by = 100
+    is_paginated = True
 
-    def get_context_data(self, **kwargs):
-        context = super(OrderListView, self).get_context_data(**kwargs)
-        context.update({
-            'orders': Order.objects.all().order_by('-created_at')
-        })
-        return context
+    def get_queryset(self):
+        query_set = Order.objects.all().order_by('-created_at')
+        return query_set
 
 
 class OrderCreateView(TemplateView):
