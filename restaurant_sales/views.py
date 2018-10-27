@@ -76,7 +76,8 @@ class OrderCreateView(TemplateView):
         context = super(OrderCreateView, self).get_context_data(**kwargs)
         context.update({
             'timezone': timezone.now(),
-            'tables': Table.objects.all().order_by('table_no')
+            'tables': Table.objects.all().order_by('table_no'),
+            'menu_items': Menu.objects.all().order_by('name')
         })
         return context
 
