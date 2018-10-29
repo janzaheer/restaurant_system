@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <title>{{ RESTAURANT_TAG }}</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'bootstrap/css/bootstrap.css' %}" rel="stylesheet">
+    <!--external css-->
+    <link href="{% static 'font-awesome/css/font-awesome.css' %}" rel="stylesheet" />
+
+    <!-- Custom styles for this template -->
+    <link href="{% static 'css/login.css' %}" rel="stylesheet">
+    <link href="{% static 'css/login-responsive.css' %}" rel="stylesheet">
+    <style>
+        .errorlist{
+            display: inline-block;
+            color: red;
+            font-size: smaller;
+            float: right;
+        }
+        .error-alert{
+            text-align: center;
+            padding-bottom: 10px;
+            font-size: xx-large;
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+<div id="login-page">
+    <div class="container">
+        <form class="form-login" method="post" action="{% url 'login' %}">
+            <h2 class="form-login-heading">sign in now</h2>
+            <div class="login-wrap">
+                {% if form.errors or form.non_field_errors %}
+                    <div class="error-alert">
+                        <i class="fa fa-warning pull-center"></i>
+                    </div>
+                {% endif %}
+                {% csrf_token %}
+                {% if form.non_field_errors %}
+                    <div>
+                        {{ form.non_field_errors }}
+                    </div>
+                {% endif %}
+                <input type="text" class="form-control" placeholder="Username" name="username" autofocus>
+                {% if form.errors %}
+                    {{ form.errors.username }}
+                {% endif %}
+                <br>
+                <input type="password" class="form-control" name="password" placeholder="Password">
+                {% if form.errors %}
+                    {{ form.errors.password  }}
+                {% endif %}
+                    <br>
+                <button class="btn btn-primary btn-block" type="submit"><i class="fa fa-lock"></i> SIGN IN</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="{% static 'jquery/jquery.js' %}"></script>
+<script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+
+</body>
+</html>
