@@ -6,7 +6,7 @@ from common.models import UserProfile
 
 
 class UserProfileAdmin(admin.ModelAdmin):
-    list_display = ('__unicode__', 'name', 'email',)
+    list_display = ('__unicode__', 'user_type', 'name', 'email',)
 
     @staticmethod
     def name(obj):

@@ -20,9 +20,9 @@ class UserProfile(models.Model):
     USER_TYPE_STOCK = 'stock'
 
     USER_TYPES = (
-        (USER_TYPE_OWNER, 'Shop'),
-        (USER_TYPE_CASHIER, 'Company'),
-        (USER_TYPE_STOCK, 'Individual'),
+        (USER_TYPE_OWNER, 'Owner'),
+        (USER_TYPE_CASHIER, 'Cashier'),
+        (USER_TYPE_STOCK, 'Stock Manager'),
     )
 
     user = models.OneToOneField(User, related_name='user_profile')
