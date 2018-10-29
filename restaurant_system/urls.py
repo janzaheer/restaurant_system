@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.conf.urls.static import static
 from django.conf import settings
 
-from common.views import DashboardView, ReportsView
+from common.views import DashboardView, ReportsView, LoginView, LogoutView
 from restaurant_menu.views import (
     CategoryList, CategoryFormView, CategoryUpdateView, CategoryDeleteView,
     MenuListView, MenuFormView, MenuUpdateView, MenuDeleteView,
@@ -44,6 +44,8 @@ from common.reports_api import (
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', DashboardView.as_view(), name='dashboard'),
+    url(r'^login/$', LoginView.as_view(), name='login'),
+    url(r'^logout/$', LogoutView.as_view(), name='logout'),
 
     # Category URLS
     url(
