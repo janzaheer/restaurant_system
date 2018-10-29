@@ -61,7 +61,7 @@ class TableDeleteView(DeleteView):
 class OrderListView(ListView):
     template_name = 'order/list.html'
     model = Order
-    paginate_by = 100
+    paginate_by = 150
     is_paginated = True
 
     def get_queryset(self):
