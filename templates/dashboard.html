@@ -3,6 +3,7 @@
     <div class="container">
         <br><br>
         <div class="row">
+            {% if request.user.user_profile.user_type == request.user.user_profile.USER_TYPE_CASHIER or request.user.user_profile.user_type == request.user.user_profile.USER_TYPE_OWNER %}
             <div class="col-lg-4 col-md-6">
                 <a href="{% url 'table_list' %}">
                     <div class="panel panel-primary">
@@ -95,6 +96,8 @@
                     </div>
                 </a>
             </div>
+            {% endif %}
+            {% if request.user.user_profile.user_type == request.user.user_profile.USER_TYPE_OWNER %}
             <div class="col-lg-4 col-md-6">
                 <a href="{% url 'reports' %}">
                     <div class="panel panel-primary">
@@ -118,6 +121,8 @@
                     </div>
                 </a>
             </div>
+            {% endif %}
+            {% if request.user.user_profile.user_type == request.user.user_profile.USER_TYPE_CASHIER or request.user.user_profile.user_type == request.user.user_profile.USER_TYPE_OWNER %}
             <div class="col-lg-4 col-md-6">
                 <a href="{% url 'logs' %}">
                     <div class="panel panel-primary">
@@ -141,6 +146,8 @@
                     </div>
                 </a>
             </div>
+            {% endif %}
+            {% if request.user.user_profile.user_type == request.user.user_profile.USER_TYPE_STOCK or request.user.user_profile.user_type == request.user.user_profile.USER_TYPE_OWNER %}
             <div class="col-lg-4 col-md-6">
                 <a href="{% url 'stock_list' %}">
                     <div class="panel panel-primary">
@@ -164,6 +171,7 @@
                     </div>
                 </a>
             </div>
+            {% endif %}
             <div class="col-lg-4 col-md-6">
                 <a href="#">
                     <div class="panel panel-primary">
