@@ -18,7 +18,13 @@ from django.contrib import admin
 from django.conf.urls.static import static
 from django.conf import settings
 
-from common.views import DashboardView, ReportsView, LoginView, LogoutView
+from common.views import (
+    DashboardView, ReportsView, LoginView,
+    LogoutView, DailySalesView,
+)
+from restaurant_employee.views import (
+        EmployeeRecordView, AddEmployeeView,
+)
 from restaurant_menu.views import (
     CategoryList, CategoryFormView, CategoryUpdateView, CategoryDeleteView,
     MenuListView, MenuFormView, MenuUpdateView, MenuDeleteView,
@@ -37,7 +43,7 @@ from restaurant_stocks.views import (
 from common.reports_api import (
     DailyOrdersAPIView, MonthlyOrderAPIView,
     DailyStocksAPIView, MonthlyStocksAPIView,
-    StockCLosedAPIView,
+    StockCLosedAPIView, DailySalesAPIView
 )
 
 
@@ -222,6 +228,22 @@ urlpatterns = [
         r'^stock/(?P<pk>\d+)/closed/logs/$',
         StockClosedItemLogsView.as_view(),
         name='closed_item_logs'
+    ),
+    url(
+        r'^daily/sales/$', DailySalesView.as_view(),
+        name='daily_sales'
+    ),
+    url(
+        r'^daily/sales/api/$', DailySalesAPIView.as_view(),
+        name='daily_sales_api'
+    ),
+    url(
+        r'^employee/$', EmployeeRecordView.as_view(),
+        name='employee_record'
+    ),
+    url(
+        r'^add_employee/$', AddEmployeeView.as_view(),
+        name='add_employee'
     ),
 ]
 

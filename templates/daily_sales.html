@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row">
+                <div class="col-lg-8 col-lg-offset-2">
+                    <div class="panel panel-default" style="height: 571px">
+                        <div class="panel-heading">
+                            <i class="fa fa-bell fa-fw"></i> Daily Sales
+                        </div>
+                        <div class="panel-body">
+                            <table class="table table-striped table-advance table-hover monthly-sales-table">
+                                <thead>
+                                <tr>
+                                    <th><i class=""></i>Date</th>
+                                    <th><i class=""></i>No. Of Orders</th>
+                                    <th><i class=""></i>Orders Amount (pkr)</th>
+                                </tr>
+                                </thead>
+                                <tbody class="daily-sales-tbody">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+</div>
+
+<script>
+
+   $.get('/daily/sales/api/', function(results, status){
+                var total_prices = [];
+                var order_dates = [];
+                var total_orders = [];
+                var daily_sales = "";
+                var counter = 1;
+                $.each(results.orders, function(key, order){
+
+                    daily_sales += "<tr><td>" + order.date + "</td><td>" + order.total_orders + "</td><td>" + order.total_price + "</td></tr>"
+                    counter += 1;
+
+                    total_prices.push(parseFloat(order.total_price));
+                    order_dates.push(order.date);
+                    total_orders.push(order.total_orders);
+
+                });
+                    $('.daily-sales-tbody').html(daily_sales);
+  });
+</script>
+{% endblock %}

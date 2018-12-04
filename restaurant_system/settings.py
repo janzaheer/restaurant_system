@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'restaurant_menu',
     'restaurant_sales',
     'restaurant_stocks',
+    'restaurant_employee',
 ]
 
 MIDDLEWARE = [
