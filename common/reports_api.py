@@ -233,3 +233,41 @@ class StockCLosedAPIView(View):
         return JsonResponse(
             {'closed_stocks': results}
         )
+
+
+class DailySalesAPIView(View):
+
+    @staticmethod
+    def get_data(obj_set, date):
+        if obj_set.exists():
+            total = obj_set.aggregate(Sum('total_due'))
+            total = total.get('total_due__sum') or 0
+        else:
+            total = 0
+
+        return {
+            'total_price': total,
+            'date': date.strftime('%m/%d/%Y'),
+            'total_orders': obj_set.count()
+        }
+
+    def get(self, request, *args, **kwargs):
+        orders = []
+        for day in range(500):
+            orders_day = timezone.now() - relativedelta(days=day)
+
+            orders_set = Order.objects.filter(
+                created_at__year=orders_day.year,
+                created_at__month=orders_day.month,
+                created_at__day=orders_day.day
+            )
+            data = self.get_data(obj_set=orders_set, date=orders_day.date())
+
+            if data.get('total_orders')== 0:
+                continue
+
+            orders.append(data)
+
+        return JsonResponse({
+            'orders': orders
+        })
