@@ -153,6 +153,7 @@ RESTAURANT_ADDRESS = (
     'Office # 11, 2nd Floor, Al-Zain Centre, '
     'Zarghoon Road Quetta, Pakistan'
 )
+TESTING = True
 
 
 try:

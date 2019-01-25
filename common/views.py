@@ -11,7 +11,7 @@ from django.contrib.auth import authenticate
 from django.views.generic import FormView, TemplateView, RedirectView
 from django.http import HttpResponseRedirect
 from django.db.models import Sum
-
+from django.conf import settings
 from django.utils import timezone
 
 from restaurant_sales.models import Order
@@ -37,6 +37,12 @@ class LoginView(FormView):
     def form_invalid(self, form):
         return super(LoginView, self).form_invalid(form)
 
+    def get_context_data(self, **kwargs):
+        context = super(LoginView, self).get_context_data(**kwargs)
+        context.update({
+            'TESTING': settings.TESTING
+        })
+        return context
 
 class LogoutView(RedirectView):
     def dispatch(self, request, *args, **kwargs):

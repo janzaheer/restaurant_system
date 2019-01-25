@@ -60,6 +60,37 @@
                     <br>
                 <button class="btn btn-primary btn-block" type="submit"><i class="fa fa-lock"></i> SIGN IN</button>
             </div>
+            {% if TESTING %}
+                <hr>
+                <table class="table table-striped table-advance table-hover table-bordered">
+                    <h3 style="text-align: center">Test Accounts</h3>
+                    <thead>
+                        <tr>
+                            <th>User Type</th>
+                            <th>Username</th>
+                            <th>Password</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Owner</td>
+                            <td>admin</td>
+                            <td>partum123</td>
+                        </tr>
+                        <tr>
+                            <td>Cashier</td>
+                            <td>cashier</td>
+                            <td>partum123</td>
+                        </tr>
+                        <tr>
+                            <td>Kitchen</td>
+                            <td>kitchen</td>
+                            <td>partum123</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br>
+            {% endif %}
         </form>
     </div>
 </div>

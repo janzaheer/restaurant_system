@@ -4,6 +4,7 @@ from django.db import models
 
 from django.db.models.signals import post_save
 from django.contrib.auth.models import User
+from django.utils import timezone
 
 
 class DatedModel(models.Model):
@@ -11,7 +12,7 @@ class DatedModel(models.Model):
         abstract = True
 
     updated_at = models.DateTimeField(auto_now=True)
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(default=timezone.now)
 
 
 class UserProfile(models.Model):
