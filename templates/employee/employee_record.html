@@ -1,7 +1,11 @@
 {% extends 'base.html' %}
 
 {% block content %}
- <div class="container">
+    <div class="container">
+        <br>
+        <a href="{% url 'dashboard' %}"><button type="button" class="btn btn-primary">Home</button></a>
+        <a href="{% url 'add_employee' %}"><button type="button" class="btn btn-primary">Add Employee Order</button></a>
+        <br><br>
         <div class="row">
             <div class="col-lg-10">
                 <div class="content-panel table-responsive">
@@ -12,47 +16,35 @@
                                 <i class="fa fa-search"></i>
                             </button>
                         </span>
-                    <a href="{% url 'dashboard' %} "><button type="button" class="btn btn-primary employee-add-button" style="float: right">Home</button></a>
                 </div>
-                <hr>
-                <table class="table table-striped table-advance table-hover item-table">
-                    <thead>
-                    <tr>
-                        <th>S.No</th>
-                        <th><i class="fa fa-bullhorn"></i> Name</th>
-                        <th><i class="fa fa-question-circle"></i>Cnic</th>
-                        <th><i class=" fa fa-bookmark"></i>Gender</th>
-                        <th><i class=" fa fa-edit"></i>Date_of_Joining</th>
-                        <th><i class="fas fa-sign-in-alt"></i>Date_of_Leaving</th>
-                    </tr>
-                    </thead>
-                    <tbody class="menu-table-body">
-                    {% if not employees %}
-                        <tr><td colspan="6" class="text-center">Record Not Found</td></tr>
-                    {% endif %}
-                    {% for employee in employees %}
+                    <hr>
+                    <table class="table table-striped table-advance table-hover item-table">
+                        <thead>
                         <tr>
-                            <td><a href="#">{{ forloop.counter }}</a></td>
-                            <td><a href="#">{{ employee.name }}</a></td>
-                            <td><a href="#"></a>{{ employee.cnic }}</td>
-                            <td><a href="#"></a>{{ employee.gender}}</td>
-                            <td><a href="#"></a>{{ employee.date_of_joining }}</td>
-                            <td><a href="#"></a>{{ employee.date_of_leaving }}</td>
-
-                            <td>
-                                <a href="#"><button class="btn btn-primary btn-xs"><i class="fa fa-plus"></i></button></a>
-                                <a href="#"><button class="btn btn-success btn-xs"><i class="fa fa-eye"></i></button></a>
-                                <a href="#"><button class="btn btn-danger btn-xs"><i class="fa  fa-trash-o"></i></button></a>
-                                <a href="#"><button class="btn btn-danger btn-xs"><i class="fas fa-history"></i></button></a>
-                            </td>
+                            <th>S.No</th>
+                            <th><i class="fa fa-bullhorn"></i> Name</th>
+                            <th><i class="fa fa-question-circle"></i>Cnic</th>
+                            <th><i class=" fa fa-bookmark"></i>Gender</th>
+                            <th><i class=" fa fa-edit"></i>Date_of_Joining</th>
+                            <th><i class="fas fa-sign-in-alt"></i>Date_of_Leaving</th>
                         </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
-                     <div class="col-md-11 ">
-                        <a href="{% url 'add_employee' %}">
-                            <button style="margin-right: -44px" type="button" class="btn btn-primary pull-right">Add Employee</button> </a>
-                    </div>
+                        </thead>
+                        <tbody class="menu-table-body">
+                        {% if not employees %}
+                            <tr><td colspan="6" class="text-center">Record Not Found</td></tr>
+                        {% endif %}
+                        {% for employee in employees %}
+                            <tr>
+                                <td><a href="#">{{ forloop.counter }}</a></td>
+                                <td><a href="#">{{ employee.name }}</a></td>
+                                <td><a href="#"></a>{{ employee.cnic }}</td>
+                                <td><a href="#"></a>{{ employee.gender}}</td>
+                                <td><a href="#"></a>{{ employee.date_of_joining }}</td>
+                                <td><a href="#"></a>{{ employee.date_of_leaving }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
