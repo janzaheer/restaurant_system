@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+<div class="content-panel">
+                    <h3 class="text-center">Create New Employee</h3>
+                    <div class="panel-body">
+                        <form class="form-horizontal add-customer-form" action="{% url 'add_employee' %}" method="post" >
+                            <div class="form-group">
+                                <div class="col-md-8 col-md-offset-1">
+                                    {% csrf_token %}
+                                    <span class="employee_name_error"  style="color: red; display: none;">This Field Is required </span>
+                                    <input type="text"  class="form-control name" name="name" placeholder="Name">
+                                    <br>
+                                    <span class="employee_mb_error" style="color: red; display: none;">This Field Is required </span>
+                                    <input type="number"  class="form-control mobile_no" name="mobile_no" placeholder="Mobile Number">
+                                    <br>
+                                    <span class="employee_cnic_error" style="color: red; display: none;">This Field Is required </span>
+                                    <input type="number" class="form-control cnic" name="cnic" placeholder="CNIC NUMBER"><br>
+                                    <select class="form-control">
+                                        <option>Male</option>
+                                        <option>Female</option>
+                                    </select><br>
+                                    <span class="DOB_error" style="color: red; display: none;">This Field Is required </span>
+                                    <input type="date" class="form-control DOB" name="date_of_joining" placeholder="Date_Of_Joining">
+                                    <br>
+                                    <button  type="button" class="btn btn-primary employee-add-button" style="float: right">Save</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+</div>
+</div>
+<script>
+     $(document).ready(function(){
+          $(".employee-add-button").on("click", function() {
+           var error= false;
+                 if ($('.name').val()== "") {
+                     $('.employee_name_error').show();
+                     error = true;
+                 }
+                 else
+                 {
+                     $('.employee_name_error').hide();
+                 }
+                  if ($('.mobile_no').val()== "") {
+                     $('.employee_mb_error').show();
+                     error = true;
+                 }
+                 else {
+                     $('.employee_mb_error').hide();
+                 }
+                 if ($('.cnic').val()=='' ) {
+                    $('.employee_cnic_error').show();
+                    error = true;
+                 }
+                 else {
+                    $('.employee_cnic_error').hide();
+                 }
+                 if ($('.DOB').val()==""){
+                    $('.DOB_error').show();
+                    error = true;
+                 }
+                 else {
+                    $('.DOB_error').hide();
+                 }
+                    if (error == false) {
+                    $('.add-customer-form').submit();
+                 }
+                    else
+                 {
+                     return;
+                 }
+          });
+        });
+
+        $(".name").keyup (function () {
+             $('.employee_name_error').hide();
+
+         });
+        $(".mobile_no").keyup (function () {
+             $('.employee_mb_error').hide();
+         });
+         $(".cnic").keyup (function () {
+             $('.employee_cnic_error').hide();
+         });
+</script>
+{% endblock %}

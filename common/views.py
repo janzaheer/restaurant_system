@@ -105,3 +105,10 @@ class ReportsView(TemplateView):
 
         })
         return context
+
+
+class DailySalesView(TemplateView):
+    template_name = 'daily_sales.html'
+
+
+
