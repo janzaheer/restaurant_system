@@ -12,7 +12,9 @@ class DatedModel(models.Model):
         abstract = True
 
     updated_at = models.DateTimeField(auto_now=True)
-    created_at = models.DateTimeField(default=timezone.now)
+    created_at = models.DateTimeField(
+        default=timezone.now, blank=True, null=True
+    )
 
 
 class UserProfile(models.Model):
