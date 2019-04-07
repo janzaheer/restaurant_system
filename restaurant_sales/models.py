@@ -37,6 +37,9 @@ class Order(DatedModel):
     sub_total = models.DecimalField(
         max_digits=20, decimal_places=2, default=0, blank=True, null=True
     )
+    discount = models.DecimalField(
+        max_digits=20, decimal_places=2, default=0, blank=True, null=True
+    )
     service_charges = models.DecimalField(
         max_digits=20, decimal_places=2, default=0, blank=True, null=True
     )

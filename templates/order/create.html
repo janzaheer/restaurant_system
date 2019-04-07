@@ -177,36 +177,18 @@
 								<td class="text-right"><strong>Service Charges (<span id="service_charges" contenteditable="true">5</span><span>%</span>)</strong></td>
                                 <td><span id="charges_amount">0</span></td>
 							</tr>
-{#							<tr>#}
-{#								<td><strong>Total Quantity: </strong><span id="totalQty" style="color: red; font-weight: bold">0</span> Units</td>#}
-{#								<td></td>#}
-{#								<td class="text-right"><strong>Discount</strong></td>#}
-{#								<td><input class="form-control" id="discount" value="0" type="text"></td>#}
-{#							</tr>#}
-{#							<tr>#}
-{#								<td></td>#}
-{#								<td></td>#}
-{#								<td class="text-right"><strong>Shipping</strong></td>#}
-{#								<td><input class="form-control" id="shipping" value="0" type="text"></td>#}
-{#							</tr>#}
+                            <tr>
+								<td></td>
+								<td></td>
+								<td class="text-right"><strong>Discount</strong></td>
+								<td><input class="form-control" id="discount" value="0" type="text"></td>
+							</tr>
 							<tr>
 								<td></td>
 								<td></td>
 								<td class="text-right"><strong>Grand Total</strong></td>
 								<td><span id="grandTotal" style="color:red">0</span></td>
 							</tr>
-{#                            <tr>#}
-{#								<td></td>#}
-{#								<td></td>#}
-{#								<td class="text-right"><strong>Received Amount</strong></td>#}
-{#								<td><input class="form-control" id="paidAmount" value="0" type="text"></td>#}
-{#							</tr>#}
-{#                            <tr>#}
-{#								<td></td>#}
-{#								<td></td>#}
-{#								<td class="text-right"><strong>Remaining Amount</strong></td>#}
-{#								<td><span id="remainingAmount">0</span></td>#}
-{#							</tr>#}
 							</tbody>
 						</table>
 					</div>
@@ -313,6 +295,7 @@
 
                 $.post("/order/generate/api/", {
                         csrfmiddlewaretoken: '{{ csrf_token }}',
+                        discount: discount,
                         table_no: table_no,
                         sub_total: sub_total,
                         grand_total: grand_total,
@@ -356,7 +339,7 @@ $('#create-invoice').on('click', function() {
 
 $('.form-control').click (function () {
     $('.list-error').hide();
-    checkDec(this);
+{#    checkDec(this);#}
 
 });
     </script>

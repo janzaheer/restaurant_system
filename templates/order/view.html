@@ -110,10 +110,13 @@
                 <div class="row">
                     <div class="col-lg-9 col-md-8 col-xs-8 text-right">Sub Total:</div>
                     <div class="col-lg-3 col-md-8 col-xs-4 text-left"><strong>{{ order.sub_total|floatformat:'-2' }}</strong></div>
-                    <br><br>
+                    <br>
                     <div class="col-lg-9 col-xs-8 text-right">Service Charges {{ order.charges_percent|floatformat:'-2' }}%:</div>
                     <div class="col-lg-3 col-md-8 col-xs-4 text-left"><strong>{{ order.service_charges|floatformat:'-2' }}</strong></div>
-                    <br><br>
+                    <br>
+                    <div class="col-lg-9 col-xs-8 text-right">Discount: </div>
+                    <div class="col-lg-3 col-md-8 col-xs-4 text-left"><strong>{{ order.discount|floatformat:'-2' }}</strong></div>
+                    <br>
                     <div class="col-lg-9 col-xs-8 text-right">Grand Total:</div>
                     <div class="col-lg-3 col-md-8 col-xs-4 text-left"><strong>{{ order.total_due|floatformat:'-2' }}</strong></div>
                     <hr>

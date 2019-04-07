@@ -112,7 +112,8 @@ Invoice.prototype = {
     calcGrandTotal: function () {
         var grandTotal = (Number(jQuery($.opt.subtotal).html())
                        * (Number(jQuery($.opt.serviceCharges).html()) / 100))
-                        + Number(jQuery($.opt.subtotal).html());
+                        + Number(jQuery($.opt.subtotal).html())
+                        - Number(jQuery($.opt.discount).val());
         grandTotal = self.roundNumber(grandTotal, 2);
         jQuery($.opt.grandTotal).html(grandTotal);
 

@@ -107,7 +107,7 @@
                                     <td></td>
                                     <td></td>
                                     <td class="text-right"><strong>Sub Total</strong></td>
-                                    <td><span id="subtotal">{{ order.sub_total }}</span></td>
+                                    <td><span id="subtotal">{{ order.sub_total|floatformat:'-2' }}</span></td>
                                 </tr>
                                 <tr>
                                     <td><strong>Total Quantity: </strong><span id="totalQty" style="color: red; font-weight: bold">{{ order.total_qty }}</span> Units</td>
@@ -118,8 +118,14 @@
                                 <tr>
                                     <td></td>
                                     <td></td>
+                                    <td class="text-right"><strong>Discount</strong></td>
+                                    <td><input class="form-control" id="discount" value="{{ order.discount|floatformat:'-2' }}" type="text"></td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
                                     <td class="text-right"><strong>Grand Total</strong></td>
-                                    <td><span id="grandTotal" style="color:red">{{ order.total_due }}</span></td>
+                                    <td><span id="grandTotal" style="color:red">{{ order.total_due|floatformat:'-2' }}</span></td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -219,6 +225,7 @@
                 var grand_total = $('#grandTotal').text();
                 var totalQty = total_quantity;
                 var service_charges = $('#charges_amount').text();
+                var discount = $('#discount').val();
                 var table_no = $('.table_no').val();
 
                 $.post("/order/" + "{{ order.id }}" + "/update/api/", {
@@ -229,6 +236,7 @@
                         totalQty: totalQty,
                         service_charges: service_charges,
                         charges_percent: $('#service_charges').text(),
+                        discount: discount,
                         pay_option: $('#pay_opt').val(),
                         items: JSON.stringify(items)
                     }, function (result, status) {

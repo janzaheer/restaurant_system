@@ -141,6 +141,7 @@ class GenerateOrderAPIView(View):
         sub_total = self.request.POST.get('sub_total')
         due_total = self.request.POST.get('grand_total')
         service_charges = self.request.POST.get('service_charges')
+        discount = self.request.POST.get('discount')
         charges_percent = self.request.POST.get('charges_percent')
         total_qty = self.request.POST.get('totalQty')
 
@@ -166,6 +167,7 @@ class GenerateOrderAPIView(View):
                 'total_due': due_total,
                 'total_qty': total_qty,
                 'service_charges': service_charges,
+                'discount': discount,
                 'charges_percent': charges_percent,
                 'paid': False,
                 'items': purchased_items_id,
@@ -191,6 +193,7 @@ class UpdateOrderAPIView(View):
         due_total = self.request.POST.get('grand_total')
         service_charges = self.request.POST.get('service_charges')
         charges_percent = self.request.POST.get('charges_percent')
+        discount = self.request.POST.get('discount')
         pay_option = self.request.POST.get('pay_option')
         total_qty = self.request.POST.get('totalQty')
         purchased_items_id = []
@@ -229,6 +232,7 @@ class UpdateOrderAPIView(View):
             order_obj.table = table
             order_obj.service_charges = service_charges
             order_obj.charges_percent = charges_percent
+            order_obj.discount = discount
             order_obj.total_qty = total_qty
             order_obj.items = purchased_items_id
             order_obj.paid = True if pay_option == 'Paid' else False
