@@ -48,4 +48,10 @@ class TableListAPIView(View):
                 'table_id': table.id,
             }
             tables.append(table)
-        return JsonResponse({'tables': tables})
+
+        response = JsonResponse({'tables': tables})
+        response["Access-Control-Allow-Origin"] = "*"
+        response["Access-Control-Allow-Methods"] = "GET, OPTIONS"
+        response["Access-Control-Max-Age"] = "1000"
+        response["Access-Control-Allow-Headers"] = "X-Requested-With, Content-Type"
+        return response
