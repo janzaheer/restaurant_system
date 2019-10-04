@@ -46,6 +46,8 @@ from common.reports_api import (
     StockCLosedAPIView, DailySalesAPIView
 )
 
+from restaurant_sales.api_views import MenuItemListAPIView
+
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -245,6 +247,12 @@ urlpatterns = [
         r'^add_employee/$', AddEmployeeView.as_view(),
         name='add_employee'
     ),
+
+    # API Endpoints
+    url(
+        r'^menu/list/api/$', MenuItemListAPIView.as_view(),
+        name='items_list_api'
+    )
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
