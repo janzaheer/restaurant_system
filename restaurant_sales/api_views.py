@@ -23,7 +23,12 @@ class MenuItemListAPIView(View):
             }
             items.append(item)
 
-        return JsonResponse({'items': items})
+        response = JsonResponse({'items': items})
+        response["Access-Control-Allow-Origin"] = "*"
+        response["Access-Control-Allow-Methods"] = "GET, OPTIONS"
+        response["Access-Control-Max-Age"] = "1000"
+        response["Access-Control-Allow-Headers"] = "X-Requested-With, Content-Type"
+        return response
 
 
 class TableListAPIView(View):
