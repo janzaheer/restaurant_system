@@ -1,4 +1,5 @@
 from restaurant_menu.models import Menu
+from restaurant_sales.models import Table
 
 from django.views import View
 from django.http import JsonResponse
@@ -24,3 +25,22 @@ class MenuItemListAPIView(View):
 
         return JsonResponse({'items': items})
 
+
+class TableListAPIView(View):
+    def dispatch(self, request, *args, **kwargs):
+        return super(
+            TableListAPIView, self
+        ).dispatch(request, *args, **kwargs)
+
+    def get(self, request, *args, **kwargs):
+        tables_obj = Table.objects.all().order_by('table_no')
+        tables = []
+        for table in tables_obj:
+            table = {
+                'table_name': table.table_name,
+                'table_no': table.table_no,
+                'table_type': table.table_type,
+                'table_id': table.id,
+            }
+            tables.append(table)
+        return JsonResponse({'tables': tables})
